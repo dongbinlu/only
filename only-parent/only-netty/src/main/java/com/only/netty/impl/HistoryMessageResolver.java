@@ -1,5 +1,6 @@
 package com.only.netty.impl;
 
+import com.only.base.constant.OnlyConstants;
 import com.only.netty.Message;
 import com.only.netty.Resolver;
 import io.netty.buffer.ByteBuf;
@@ -19,10 +20,10 @@ public class HistoryMessageResolver implements Resolver {
 
     @Override
     public boolean support(Message message) {
-        return message.getFlag() == (byte) 0x00 &&
-                message.getType() == (byte) 0x00 &&
-                message.getTag() == (byte) 0x00 &&
-                StringUtils.equalsIgnoreCase("0x00", new String(message.getValue(), CharsetUtil.UTF_8));
+        return message.getFlag() == OnlyConstants.Netty.WebSocketProtocol.FLAG &&
+                message.getType() == OnlyConstants.Netty.WebSocketProtocol.TYPE[0] &&
+                message.getTag() == OnlyConstants.Netty.WebSocketProtocol.TAG[0] &&
+                StringUtils.equalsIgnoreCase(OnlyConstants.Netty.WebSocketProtocol.VALUE, new String(message.getValue(), CharsetUtil.UTF_8));
     }
 
     @Override
@@ -36,7 +37,7 @@ public class HistoryMessageResolver implements Resolver {
         String value = "";
         try {
             response.setFlag(message.getFlag());
-            response.setTag((byte) 0x01);
+            response.setType(OnlyConstants.Netty.WebSocketProtocol.TYPE[1]);
             response.setTag(message.getTag());
             value = "历史处理成功";
         } catch (Exception e) {

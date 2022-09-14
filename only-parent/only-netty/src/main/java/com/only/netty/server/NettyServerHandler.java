@@ -1,5 +1,6 @@
 package com.only.netty.server;
 
+import com.only.base.constant.OnlyConstants;
 import com.only.netty.Message;
 import com.only.netty.MessageResolverFactory;
 import com.only.netty.Resolver;
@@ -10,13 +11,13 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 /**
  * 自定义Handler需要继承netty规定好的某个HandlerAdapter(规范)
@@ -26,12 +27,7 @@ import java.util.Map;
 @Slf4j
 public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
 
-    /**
-     * 收集系统中所有{@link Resolver} 接口的实现。 key为在spring容器中Bean的名字
-     */
-
-    @Autowired
-    private Map<String, Resolver> resolvers;
+    int readIdleTimes = 0;
 
     /**
      * 获取一个消息处理器工厂类实例
@@ -58,11 +54,6 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
 
     }
 
-    @Override
-    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("12222222222222222");
-    }
-
     /**
      * 读取数据
      */
@@ -77,9 +68,9 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
             log.info("【服务端(TextWebSocketFrame)】收到消息, value:{}", value);
 
             Message request = Message.builder()
-                    .flag((byte) 0x00)
-                    .type((byte) 0x00)
-                    .tag((byte) 0x00)
+                    .flag(OnlyConstants.Netty.WebSocketProtocol.FLAG)
+                    .type(OnlyConstants.Netty.WebSocketProtocol.TYPE[0])
+                    .tag(OnlyConstants.Netty.WebSocketProtocol.TAG[0])
                     .length(value.length())
                     .value(value.getBytes(CharsetUtil.UTF_8))
                     .build();
@@ -127,6 +118,59 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     /**
+     * 超时处理
+     *
+     * @param ctx
+     * @param evt
+     * @throws Exception
+     */
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+
+        if (evt instanceof WebSocketServerProtocolHandler.ServerHandshakeStateEvent) {
+            ctx.fireUserEventTriggered(evt);
+        }
+
+        if (evt instanceof IdleStateEvent) {
+            IdleStateEvent event = (IdleStateEvent) evt;
+            String eventType = null;
+
+            switch (event.state()) {
+                case READER_IDLE:
+                    eventType = "读空闲";
+                    readIdleTimes++;// 读空闲的计数加1
+                    break;
+                case WRITER_IDLE:
+                    eventType = "写空闲";
+                    // 不处理
+                    break;
+                case ALL_IDLE:
+                    eventType = "读写空闲";
+                    // 不处理
+                    break;
+                default:
+                    break;
+            }
+            log.warn(ctx.channel().remoteAddress() + "超时事件: " + eventType);
+            if (readIdleTimes > OnlyConstants.Netty.READ_IDLE_TIMES) {
+
+                log.warn("【服务端】读空闲超过" + OnlyConstants.Netty.READ_IDLE_TIMES + "次,关闭连接，释放更多资源");
+
+                Message response = new Message();
+                response.setFlag(OnlyConstants.Netty.OnlyProtocol.FLAG);
+                response.setType(OnlyConstants.Netty.OnlyProtocol.TYPE[1]);
+                response.setTag(OnlyConstants.Netty.OnlyProtocol.TAG[0]);
+                String value = "idle close";
+                response.setLength(value.length());
+                response.setValue(value.getBytes(CharsetUtil.UTF_8));
+
+                ctx.channel().writeAndFlush(response);
+                ctx.channel().close();
+            }
+        }
+    }
+
+    /**
      * 表示channel处于不活动状态，提示离线了
      */
     @Override
@@ -141,7 +185,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        log.error("cause:{}", cause);
+        log.error("cause:", cause);
         ctx.close();
     }
 

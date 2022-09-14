@@ -14,6 +14,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 public final class MessageResolverFactory {
 
+    /**
+     * 收集系统中所有{@link Resolver} 接口的实现。 key为在spring容器中Bean的名字
+     */
     @Autowired
     private Map<String, Resolver> resolverMap;
 

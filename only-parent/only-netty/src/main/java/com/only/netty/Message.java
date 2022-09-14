@@ -16,6 +16,7 @@ public class Message {
      * 标识 1字节
      * 0x00代表webSocket
      * 0xD0代表平台标识
+     * 0xD1代表only
      */
     private byte flag;
 

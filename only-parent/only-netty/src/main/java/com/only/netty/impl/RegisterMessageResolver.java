@@ -1,5 +1,6 @@
 package com.only.netty.impl;
 
+import com.only.base.constant.OnlyConstants;
 import com.only.netty.Message;
 import com.only.netty.Resolver;
 import io.netty.buffer.ByteBuf;
@@ -16,7 +17,7 @@ public class RegisterMessageResolver implements Resolver {
 
     @Override
     public boolean support(Message message) {
-        return message.getFlag() == (byte) 0xD0 && message.getType() == (byte) 0x00 && message.getTag() == (byte) 0x01;
+        return message.getFlag() == OnlyConstants.Netty.TcpProtocol.FLAG && message.getType() == OnlyConstants.Netty.TcpProtocol.TYPE[0] && message.getTag() == OnlyConstants.Netty.TcpProtocol.TAG[0];
     }
 
     @Override
@@ -30,7 +31,7 @@ public class RegisterMessageResolver implements Resolver {
         String value = "";
         try {
             response.setFlag(message.getFlag());
-            response.setTag((byte) 0x01);
+            response.setType(OnlyConstants.Netty.TcpProtocol.TYPE[1]);
             response.setTag(message.getTag());
             value = "注册成功";
         } catch (Exception e) {

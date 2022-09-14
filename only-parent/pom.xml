@@ -59,6 +59,7 @@
         <module>only-auth</module>
         <module>only-netty</module>
         <module>only-base</module>
+        <module>only-test</module>
     </modules>
 
 </project>
