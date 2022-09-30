@@ -13,7 +13,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 
 /**
- * 路由规则抽象类     策略模式    并加入 检查配置路由参数和 策略是否相匹配
+ * 路由规则抽象类
+ * 策略模式
+ * 并加入检查配置路由参数和 策略是否相匹配
  *
  * @EnableConfigurationProperties 这个注解可以提供一种方便的方式来将带有@ConfigurationProperties注解的类注
  * 入为Spring容器的Bean。，然后用 Spring的@Autowire来注入 即将 TulingDsRoutingSetProperties注入容器
@@ -25,6 +27,7 @@ public abstract class AbstractTulingRouting implements ITulingRouting, Initializ
 
     @Autowired
     private TulingDsRoutingSetProperties tulingDsRoutingSetProperties;
+
 
     /**
      * 获取路由key的hash值   这里直接采用的hashcode
@@ -39,7 +42,7 @@ public abstract class AbstractTulingRouting implements ITulingRouting, Initializ
     }
 
     /**
-     * 获取表的后缀
+     * 获取表的后缀：_0000,_0001,_0002
      *
      * @param tableIndex 表的索引值
      * @return
@@ -80,7 +83,7 @@ public abstract class AbstractTulingRouting implements ITulingRouting, Initializ
     }
 
     /**
-     * 检查多库 多表配置
+     * 检查多库多表配置
      */
     private void checkRoutingDsTableStategyConfig() {
         if (tulingDsRoutingSetProperties.getTableNum() <= 1 || tulingDsRoutingSetProperties.getDataSourceNum() <= 1) {

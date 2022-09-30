@@ -13,7 +13,7 @@ public class UserServiceImpl {
     private UserMapper userMapper;
 
 
-    @Router(routingFiled = "userId")
+    //@Router(routingFiled = "userId")
     public void insert(User user) {
         userMapper.insertUser(user);
     }

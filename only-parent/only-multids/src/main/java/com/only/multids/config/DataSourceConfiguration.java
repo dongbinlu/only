@@ -27,7 +27,8 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties({TulingDsRoutingSetProperties.class, TulingDruidProperties.class})  //  @EnableConfigurationProperties注解的作用是：使使用 @ConfigurationProperties 注解的类生效。
+//  @EnableConfigurationProperties注解的作用是：使使用 @ConfigurationProperties 注解的类生效。
+@EnableConfigurationProperties({TulingDsRoutingSetProperties.class, TulingDruidProperties.class})
 @MapperScan(basePackages = "com.only.multids.busi.dao")
 public class DataSourceConfiguration {
 
@@ -76,10 +77,10 @@ public class DataSourceConfiguration {
         // 自己的多数据源类 需要 继承 AbstractRoutingDataSource
         TulingMultiDataSource tulingMultiDataSource = new TulingMultiDataSource();
 
-        Map<Object,Object> targetDataSources = new HashMap<>();
-        targetDataSources.put("dataSource00",dataSource00());
-        targetDataSources.put("dataSource01",dataSource01());
-        targetDataSources.put("dataSource02",dataSource02());
+        Map<Object, Object> targetDataSources = new HashMap<>();
+        targetDataSources.put("dataSource00", dataSource00());
+        targetDataSources.put("dataSource01", dataSource01());
+        targetDataSources.put("dataSource02", dataSource02());
 
         //把多个数据 和 多数据源  进行关联
         tulingMultiDataSource.setTargetDataSources(targetDataSources);
@@ -87,10 +88,10 @@ public class DataSourceConfiguration {
         tulingMultiDataSource.setDefaultTargetDataSource(dataSource00());
 
         //将索引字段和 数据源进行映射 ，方便 分库时候 根据取模的值 计算出是哪个库
-        Map<Integer,String> setMappings = new HashMap<>();
-        setMappings.put(0,"dataSource00");
-        setMappings.put(1,"dataSource01");
-        setMappings.put(2,"dataSource02");
+        Map<Integer, String> setMappings = new HashMap<>();
+        setMappings.put(0, "dataSource00");
+        setMappings.put(1, "dataSource01");
+        setMappings.put(2, "dataSource02");
         tulingDsRoutingSetProperties.setDataSourceKeysMapping(setMappings);
 
         return tulingMultiDataSource;
@@ -113,7 +114,7 @@ public class DataSourceConfiguration {
     }
 
     @Bean
-    public DataSourceTransactionManager transactionManager(@Qualifier("tulingMultiDataSource") TulingMultiDataSource tulingMultiDataSource){
+    public DataSourceTransactionManager transactionManager(@Qualifier("tulingMultiDataSource") TulingMultiDataSource tulingMultiDataSource) {
         return new DataSourceTransactionManager(tulingMultiDataSource);
     }
 

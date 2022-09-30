@@ -24,7 +24,7 @@ public class TulingDsRoutingSetProperties  {
     private Integer tableNum = 1;
 
     /**
-     * 路由字段 必须在配置文件中配置(不配置会抛出异常)  可以不指定，油自定义注解配置
+     * 路由字段 必须在配置文件中配置(不配置会抛出异常)  可以不指定，由自定义注解配置
      */
     private String routingFiled;
 
