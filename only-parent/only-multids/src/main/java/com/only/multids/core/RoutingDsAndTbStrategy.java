@@ -1,7 +1,7 @@
 package com.only.multids.core;
 
 
-import com.only.multids.dynamicdatasource.MultiDataSourceHolder;
+import com.only.multids.dynamicdatasource.DataSourceHolder;
 import com.only.multids.exception.LoadRoutingStategyUnMatch;
 import com.only.multids.exception.RoutingFiledArgsIsNull;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * 多表多库策略
  */
 @Slf4j
-public class RoutingDsAndTbStrategy extends AbstractTulingRouting {
+public class RoutingDsAndTbStrategy extends AbstractRouting {
 
     /**
      * 功能描述:   计算 库的 key值
@@ -19,17 +19,17 @@ public class RoutingDsAndTbStrategy extends AbstractTulingRouting {
     public String calDataSourceKey(String routingFieldValue, String routingField) throws LoadRoutingStategyUnMatch, RoutingFiledArgsIsNull {
 
         String dataSourceKey = null;
-        //调用父类 AbstractTulingRouting 计算 路由 的key值
+        //调用父类 AbstractRouting 计算 路由 的key值
         Integer routingFiledHashCode = getRoutingFileHashCode(routingFieldValue);
 
         //定位库的索引值
-        Integer dsIndex = routingFiledHashCode % getTulingDsRoutingSetProperties().getDataSourceNum();
+        Integer dsIndex = routingFiledHashCode % getDsRoutingSetProperties().getDataSourceNum();
 
         //根据库的索引值定位 数据源的key
-        dataSourceKey = getTulingDsRoutingSetProperties().getDataSourceKeysMapping().get(dsIndex);
+        dataSourceKey = getDsRoutingSetProperties().getDataSourceKeysMapping().get(dsIndex);
 
         //放入线程变量
-        MultiDataSourceHolder.setdataSourceKey(dataSourceKey);
+        DataSourceHolder.setdataSourceKey(dataSourceKey);
 
         log.info("根据路由字段:{},值:{},计算出数据库索引值:{},数据源key的值:{}", routingField, routingFieldValue, dsIndex, dataSourceKey);
 
@@ -47,11 +47,11 @@ public class RoutingDsAndTbStrategy extends AbstractTulingRouting {
 
         Integer routingFiledHashCode = getRoutingFileHashCode(routingFiled);
 
-        Integer tbIndex = routingFiledHashCode % getTulingDsRoutingSetProperties().getTableNum();
+        Integer tbIndex = routingFiledHashCode % getDsRoutingSetProperties().getTableNum();
 
         String tableSuffix = getFormatTableSuffix(tbIndex);
 
-        MultiDataSourceHolder.setTableIndex(tableSuffix);
+        DataSourceHolder.setTableIndex(tableSuffix);
 
         return tableSuffix;
     }

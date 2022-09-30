@@ -1,4 +1,4 @@
-package com.only.multids.support;
+package com.only.multids.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "spring.datasource")     //配置文件的信息，读取并自动封装成实体类
 @Data
-public class TulingDruidProperties {
+public class DruidProperties {
 
     private String druid00username;
 

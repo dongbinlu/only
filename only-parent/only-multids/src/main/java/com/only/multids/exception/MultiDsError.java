@@ -6,7 +6,7 @@ import lombok.Data;
  * 所有异常的父类
  */
 @Data
-public class TulingMultiDsError extends RuntimeException {
+public class MultiDsError extends RuntimeException {
 
     private Integer errorCode;
 

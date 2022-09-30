@@ -1,4 +1,4 @@
-package com.only.multids.busi.dao;
+package com.only.multids.busi.mapper;
 
 import com.only.multids.busi.bean.User;
 import org.apache.ibatis.annotations.Insert;

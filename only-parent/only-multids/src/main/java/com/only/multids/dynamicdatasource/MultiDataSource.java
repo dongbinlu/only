@@ -11,10 +11,10 @@ import org.springframework.lang.Nullable;
  * 能有在运行时, 根据某种key值来动态切换到真正的DataSource上。
  */
 @Slf4j
-public class TulingMultiDataSource extends AbstractRoutingDataSource {
+public class MultiDataSource extends AbstractRoutingDataSource {
     @Nullable
     @Override
     protected Object determineCurrentLookupKey() {
-        return MultiDataSourceHolder.getDataSourceKey();
+        return DataSourceHolder.getDataSourceKey();
     }
 }

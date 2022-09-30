@@ -1,9 +1,9 @@
 package com.only.multids.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.only.multids.dynamicdatasource.TulingMultiDataSource;
-import com.only.multids.support.TulingDruidProperties;
-import com.only.multids.support.TulingDsRoutingSetProperties;
+import com.only.multids.dynamicdatasource.MultiDataSource;
+import com.only.multids.properties.DruidProperties;
+import com.only.multids.properties.DsRoutingSetProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -28,25 +28,25 @@ import java.util.Map;
 @Slf4j
 @Configuration
 //  @EnableConfigurationProperties注解的作用是：使使用 @ConfigurationProperties 注解的类生效。
-@EnableConfigurationProperties({TulingDsRoutingSetProperties.class, TulingDruidProperties.class})
-@MapperScan(basePackages = "com.only.multids.busi.dao")
+@EnableConfigurationProperties({DsRoutingSetProperties.class, DruidProperties.class})
+@MapperScan(basePackages = "com.only.multids.busi.mapper")
 public class DataSourceConfiguration {
 
     @Autowired
-    private TulingDsRoutingSetProperties tulingDsRoutingSetProperties;
+    private DsRoutingSetProperties dsRoutingSetProperties;
 
     @Autowired
-    private TulingDruidProperties tulingDruidProperties;
+    private DruidProperties druidProperties;
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.druid00")
     public DataSource dataSource00() {
 
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUsername(tulingDruidProperties.getDruid00username());
-        dataSource.setPassword(tulingDruidProperties.getDruid00passwrod());
-        dataSource.setUrl(tulingDruidProperties.getDruid00jdbcUrl());
-        dataSource.setDriverClassName(tulingDruidProperties.getDruid00driverClass());
+        dataSource.setUsername(druidProperties.getDruid00username());
+        dataSource.setPassword(druidProperties.getDruid00passwrod());
+        dataSource.setUrl(druidProperties.getDruid00jdbcUrl());
+        dataSource.setDriverClassName(druidProperties.getDruid00driverClass());
         return dataSource;
     }
 
@@ -54,10 +54,10 @@ public class DataSourceConfiguration {
     @ConfigurationProperties(prefix = "spring.datasource.druid01")
     public DataSource dataSource01() {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUsername(tulingDruidProperties.getDruid01username());
-        dataSource.setPassword(tulingDruidProperties.getDruid01passwrod());
-        dataSource.setUrl(tulingDruidProperties.getDruid01jdbcUrl());
-        dataSource.setDriverClassName(tulingDruidProperties.getDruid01driverClass());
+        dataSource.setUsername(druidProperties.getDruid01username());
+        dataSource.setPassword(druidProperties.getDruid01passwrod());
+        dataSource.setUrl(druidProperties.getDruid01jdbcUrl());
+        dataSource.setDriverClassName(druidProperties.getDruid01driverClass());
         return dataSource;
     }
 
@@ -65,17 +65,17 @@ public class DataSourceConfiguration {
     @ConfigurationProperties(prefix = "spring.datasource.druid02")
     public DataSource dataSource02() {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUsername(tulingDruidProperties.getDruid02username());
-        dataSource.setPassword(tulingDruidProperties.getDruid02passwrod());
-        dataSource.setUrl(tulingDruidProperties.getDruid02jdbcUrl());
-        dataSource.setDriverClassName(tulingDruidProperties.getDruid02driverClass());
+        dataSource.setUsername(druidProperties.getDruid02username());
+        dataSource.setPassword(druidProperties.getDruid02passwrod());
+        dataSource.setUrl(druidProperties.getDruid02jdbcUrl());
+        dataSource.setDriverClassName(druidProperties.getDruid02driverClass());
         return dataSource;
     }
 
-    @Bean("tulingMultiDataSource")
-    public TulingMultiDataSource dataSource() {
+    @Bean("multiDataSource")
+    public MultiDataSource dataSource() {
         // 自己的多数据源类 需要 继承 AbstractRoutingDataSource
-        TulingMultiDataSource tulingMultiDataSource = new TulingMultiDataSource();
+        MultiDataSource multiDataSource = new MultiDataSource();
 
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put("dataSource00", dataSource00());
@@ -83,28 +83,28 @@ public class DataSourceConfiguration {
         targetDataSources.put("dataSource02", dataSource02());
 
         //把多个数据 和 多数据源  进行关联
-        tulingMultiDataSource.setTargetDataSources(targetDataSources);
+        multiDataSource.setTargetDataSources(targetDataSources);
         //设置默认数据源
-        tulingMultiDataSource.setDefaultTargetDataSource(dataSource00());
+        multiDataSource.setDefaultTargetDataSource(dataSource00());
 
         //将索引字段和 数据源进行映射 ，方便 分库时候 根据取模的值 计算出是哪个库
         Map<Integer, String> setMappings = new HashMap<>();
         setMappings.put(0, "dataSource00");
         setMappings.put(1, "dataSource01");
         setMappings.put(2, "dataSource02");
-        tulingDsRoutingSetProperties.setDataSourceKeysMapping(setMappings);
+        dsRoutingSetProperties.setDataSourceKeysMapping(setMappings);
 
-        return tulingMultiDataSource;
+        return multiDataSource;
 
     }
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("tulingMultiDataSource") TulingMultiDataSource tulingMultiDataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("multiDataSource") MultiDataSource multiDataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         //设置数据源 为 上面的 自定义数据源
-        sqlSessionFactoryBean.setDataSource(tulingMultiDataSource);
+        sqlSessionFactoryBean.setDataSource(multiDataSource);
         //设置mybatis映射路径
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mybatis/mapper/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mappers/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
@@ -114,8 +114,8 @@ public class DataSourceConfiguration {
     }
 
     @Bean
-    public DataSourceTransactionManager transactionManager(@Qualifier("tulingMultiDataSource") TulingMultiDataSource tulingMultiDataSource) {
-        return new DataSourceTransactionManager(tulingMultiDataSource);
+    public DataSourceTransactionManager transactionManager(@Qualifier("multiDataSource") MultiDataSource multiDataSource) {
+        return new DataSourceTransactionManager(multiDataSource);
     }
 
 }

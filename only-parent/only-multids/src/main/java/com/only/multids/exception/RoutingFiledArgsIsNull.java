@@ -7,7 +7,7 @@ import lombok.Data;
  * 路由key 为空异常
  */
 @Data
-public class RoutingFiledArgsIsNull extends TulingMultiDsError {
+public class RoutingFiledArgsIsNull extends MultiDsError {
 
     public RoutingFiledArgsIsNull(MultiDsErrorEnum multiDsErrorEnum) {
         super();

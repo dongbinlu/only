@@ -1,6 +1,6 @@
 package com.only.multids.config;
 
-import com.only.multids.core.ITulingRouting;
+import com.only.multids.core.IRouting;
 import com.only.multids.core.RoutingDsAndTbStrategy;
 import com.only.multids.core.RoutingDsStrategy;
 import com.only.multids.core.RoutingTbStategy;
@@ -30,7 +30,7 @@ public class RoutingStategyConfig {
      */
     @Bean
     @ConditionalOnProperty(prefix = "only.dsroutingset",name = "routingStategy",havingValue ="ROUTING_DS_TABLE_STATEGY")
-    public ITulingRouting routingDsAndTbStrategy() {
+    public IRouting routingDsAndTbStrategy() {
         return new RoutingDsAndTbStrategy();
     }
 
@@ -40,7 +40,7 @@ public class RoutingStategyConfig {
      */
     @Bean
     @ConditionalOnProperty(prefix = "only.dsroutingset",name = "routingStategy",havingValue ="ROUTGING_DS_STATEGY")
-    public ITulingRouting routingDsStrategy() {
+    public IRouting routingDsStrategy() {
         return new RoutingDsStrategy();
     }
 
@@ -50,7 +50,7 @@ public class RoutingStategyConfig {
      */
     @Bean
     @ConditionalOnProperty(prefix = "only.dsroutingset",name = "routingStategy",havingValue ="ROUTGIN_TABLE_STATEGY")
-    public ITulingRouting routingTbStategy() {
+    public IRouting routingTbStategy() {
         return new RoutingTbStategy();
     }
 }

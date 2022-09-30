@@ -95,4 +95,25 @@ public interface OnlyConstants {
 
     }
 
+    interface MultiDS {
+
+        /**
+         * 多库 多表策略
+         */
+        String ROUTING_DS_TABLE_STATEGY = "ROUTING_DS_TABLE_STATEGY";
+
+        /**
+         * 多库 一表策略
+         */
+        String ROUTGING_DS_STATEGY = "ROUTGING_DS_STATEGY";
+
+        /**
+         * 一库多表策略
+         */
+        String ROUTGIN_TABLE_STATEGY = "ROUTGIN_TABLE_STATEGY";
+
+        String DEFAULT_ROUTING_FIELD = "userId";
+
+    }
+
 }

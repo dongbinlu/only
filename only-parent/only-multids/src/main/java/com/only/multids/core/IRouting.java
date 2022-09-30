@@ -8,7 +8,7 @@ import com.only.multids.exception.RoutingFiledArgsIsNull;
  * 路由接口
  * 策略模式接口
  */
-public interface ITulingRouting {
+public interface IRouting {
 
     /**
      * 根据规则计算出到底是哪个数据源

@@ -4,11 +4,12 @@ import com.only.multids.annotation.Router;
 import com.only.multids.busi.bean.User;
 import com.only.multids.busi.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
 
 
@@ -22,7 +23,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping("/save")
+    @PostMapping
     @Router(routingFiled = "userId")
     public void insertUser(User user) {
         userService.insert(user);

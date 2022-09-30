@@ -1,8 +1,8 @@
 package com.only.multids.aspect;
 
 import com.only.multids.annotation.Router;
-import com.only.multids.core.ITulingRouting;
-import com.only.multids.dynamicdatasource.MultiDataSourceHolder;
+import com.only.multids.core.IRouting;
+import com.only.multids.dynamicdatasource.DataSourceHolder;
 import com.only.multids.enumuration.MultiDsErrorEnum;
 import com.only.multids.exception.LoadRoutingStategyUnMatch;
 import com.only.multids.exception.ParamsNotContainsRoutingField;
@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
 public class RoutingAspect {
 
     @Autowired
-    private ITulingRouting routing;
+    private IRouting routing;
 
 
     @Pointcut("@annotation(com.only.multids.annotation.Router)")
@@ -95,7 +95,7 @@ public class RoutingAspect {
     @After("pointCut()")
     public void methodAfter(JoinPoint joinPoint){
         //清理掉当前设置的数据源，让默认的数据源不受影响
-        MultiDataSourceHolder.clearDataSourceKey();
-        MultiDataSourceHolder.clearTableIndex();
+        DataSourceHolder.clearDataSourceKey();
+        DataSourceHolder.clearTableIndex();
     }
 }

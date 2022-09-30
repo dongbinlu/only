@@ -7,7 +7,7 @@ import com.only.multids.enumuration.MultiDsErrorEnum;
  * Created by 爆裂无球 on 2019/4/18.
  */
 
-public class ParamsNotContainsRoutingField extends TulingMultiDsError {
+public class ParamsNotContainsRoutingField extends MultiDsError {
 
 
     public ParamsNotContainsRoutingField(MultiDsErrorEnum paramsNotContainsRouting) {

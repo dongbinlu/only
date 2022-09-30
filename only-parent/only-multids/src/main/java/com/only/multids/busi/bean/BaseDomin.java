@@ -1,13 +1,13 @@
 package com.only.multids.busi.bean;
 
-import com.only.multids.dynamicdatasource.MultiDataSourceHolder;
+import com.only.multids.dynamicdatasource.DataSourceHolder;
 
 public class BaseDomin {
 
     private String tableSuffix;
 
     public String getTableSuffix() {
-        this.tableSuffix = MultiDataSourceHolder.getTableIndex();
+        this.tableSuffix = DataSourceHolder.getTableIndex();
         return tableSuffix;
     }
 

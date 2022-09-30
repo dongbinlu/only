@@ -1,6 +1,6 @@
-package com.only.multids.support;
+package com.only.multids.properties;
 
-import com.only.multids.constant.TulingConstant;
+import com.only.base.constant.OnlyConstants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  */
 @ConfigurationProperties(prefix = "only.dsroutingset")      //配置文件的信息，读取并自动封装成实体类
 @Data
-public class TulingDsRoutingSetProperties  {
+public class DsRoutingSetProperties {
 
     /**
      * 默认是一个数据库 默认一个
@@ -31,23 +31,23 @@ public class TulingDsRoutingSetProperties  {
     /**
      * 所有生产写库数据有的名称  在DataSourceConfiguration类中的dataSource方法中赋值
      */
-    private Map<Integer,String> dataSourceKeysMapping;
+    private Map<Integer, String> dataSourceKeysMapping;
 
     /**
      * 表的后缀连接风格 比如order_
      */
-    private String tableSuffixConnect="_";
+    private String tableSuffixConnect = "_";
 
     /**
      * 表的索引值 格式化为四位 不足左补零   1->0001 然后在根据tableSuffixConnect属性拼接成
      * 成一个完整的表名  比如 order表 所以为1  那么数据库表明为 order_0001
      */
-    private String tableSuffixStyle= "%04d";
+    private String tableSuffixStyle = "%04d";
 
 
     /**
      * 默认的路由策略
      */
-    private String routingStategy= TulingConstant.ROUTING_DS_TABLE_STATEGY;
+    private String routingStategy = OnlyConstants.MultiDS.ROUTING_DS_TABLE_STATEGY;
 
 }
