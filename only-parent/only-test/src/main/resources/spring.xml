@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.alibaba.com/schema/stat
+       http://www.alibaba.com/schema/stat.xsd
+       http://mybatis.org/schema/mybatis-spring
+       http://mybatis.org/schema/mybatis-spring.xsd
+       http://www.springframework.org/schema/aop
+       https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--
 
-    <bean id="instanceA" class="com.only.test.ioc.InstanceA">
-        <property name="instanceB" ref="instanceB"></property>
-    </bean>
-
-    <bean id="instanceB" class="com.only.test.ioc.InstanceB">
-        <property name="instanceA" ref="instanceA"></property>
-    </bean>
+        <bean id="instanceA" class="com.only.test.ioc.InstanceA">
+            <property name="instanceB" ref="instanceB"></property>
+        </bean>
+           <bean id="instanceB" class="com.only.test.ioc.InstanceB">
+               <property name="instanceA" ref="instanceA"></property>
+           </bean>
+        -->
     <!--
     <bean id="instanceA" class="com.only.test.ioc.InstanceA">
         <constructor-arg name="instanceB" ref="instanceB"></constructor-arg>
@@ -19,4 +34,45 @@
         <constructor-arg name="instanceA" ref="instanceA"></constructor-arg>
     </bean>
     -->
+    <!--    事务注解扫描器-->
+    <context:annotation-config/>
+    <!--    开启事务注解-->
+    <tx:annotation-driven/>
+    <!--    扫描包-->
+    <context:component-scan base-package="com.only.test.mybatis"/>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <constructor-arg name="url" value="jdbc:mysql://127.0.0.1:3306/dms"></constructor-arg>
+        <constructor-arg name="username" value="root"></constructor-arg>
+        <constructor-arg name="password" value="root"></constructor-arg>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.only.test.mybatis.mapper.UserMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+    <!--    结合AOP，实现事务的植入-->
+    <!--    配置事务的类-->
+<!--    <tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+<!--        &lt;!&ndash;        给哪些方法配置事务&ndash;&gt;-->
+<!--        <tx:attributes>-->
+<!--            <tx:method name="addUser"/>-->
+<!--            <tx:method name="deleteUser"/>-->
+<!--        </tx:attributes>-->
+<!--    </tx:advice>-->
+
+<!--    &lt;!&ndash;    配置事务的切入&ndash;&gt;-->
+<!--    <aop:config>-->
+<!--        <aop:pointcut id="txPoint" expression="execution(* mapper.*.*(..))"/>-->
+<!--        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>-->
+<!--    </aop:config>-->
+
+
 </beans>

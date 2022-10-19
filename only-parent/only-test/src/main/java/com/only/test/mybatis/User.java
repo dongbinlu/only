@@ -1,4 +1,4 @@
-package com.only.test.transaction.entity;
+package com.only.test.mybatis;
 
 
 import lombok.AllArgsConstructor;
