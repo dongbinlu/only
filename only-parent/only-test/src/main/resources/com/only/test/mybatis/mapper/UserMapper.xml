@@ -6,7 +6,7 @@
         <result column="username" property="username"/>
     </resultMap>
 
-    <cache></cache>
+<!--    <cache></cache>-->
 
     <sql id="Base_Column_List">
         user_id

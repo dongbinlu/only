@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.List;
 
 public class MybatisMain {
     SqlSessionFactory sqlSessionFactory = null;
@@ -26,17 +25,24 @@ public class MybatisMain {
     @Test
     public void test() throws Exception {
         UserMapper mapper = session.getMapper(UserMapper.class);
-        //User user = mapper.getByUserId(1);
-        // 只有关闭会话后才会进行二级缓存
-        //session.close();
-        //mapper.updateByUserId("boy", 1);
+        User user = mapper.getByUserId(1);
+/*
 
-        //UserMapper mapper1 = sqlSessionFactory.openSession(true).getMapper(UserMapper.class);
-        //User user2 = mapper1.getByUserId(1);
+        // 只有关闭会话后才会进行二级缓存
+        session.close();
+        Thread thread = new Thread(() -> {
+            UserMapper mapper1 = sqlSessionFactory.openSession(true).getMapper(UserMapper.class);
+            User user2 = mapper1.getByUserId(1);
+        });
+
+        thread.start();
+
+        thread.join();
+*/
 
         //User user3 = mapper1.getByUsername("boy");
 
-        List<User> users = mapper.getByUsernameTPage("boy", new Page(2, 1));
+        //List<User> users = mapper.getByUsernameTPage("boy", new Page(2, 1));
 
         //System.out.println(user == user2);
 

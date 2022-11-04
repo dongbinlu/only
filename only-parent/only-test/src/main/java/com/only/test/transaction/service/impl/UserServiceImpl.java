@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     public void insertRole(Role role) {
         try {
             roleDao.insert(role);
-            int x = 1 / 0;
+            //int x = 1 / 0;
         } catch (Exception e) {
             throw new RuntimeException("除0异常");
         }

@@ -16,14 +16,14 @@ spring:
     format:
       date: yyyy-MM-dd HH:mm:ss
     static-path-pattern: /static/**
-  thymeleaf:
-    cache: false
-    prefix: classpath:/templates/
-    suffix: .html
-    mode: HTML5
-    encoding: UTF-8
-    servlet:
-      content-type: text/html;charset=UTF-8
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    mode: HTML5
+#    encoding: UTF-8
+#    servlet:
+#      content-type: text/html;charset=UTF-8
 
 mybatis:
   type-aliases-package: com.only.test.boot.entity

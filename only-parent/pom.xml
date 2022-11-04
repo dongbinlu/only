@@ -68,6 +68,8 @@
         <module>only-base</module>
         <module>only-test</module>
         <module>only-multids</module>
+        <module>only-redis</module>
+        <module>only-zk</module>
     </modules>
 
 </project>

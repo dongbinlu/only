@@ -6,6 +6,7 @@ import org.springframework.context.annotation.*;
 @ComponentScan(basePackages = {"com.only.test.bean"},
         includeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = Service.class)},
         useDefaultFilters = true)
+@ImportResource(locations = ("classpath:spring.xml"))
 @Import(value = {Car.class, OnlyImportSelector.class, OnlyBeanDefinitionRegister.class})
 public class MainConfig {
 
@@ -14,16 +15,5 @@ public class MainConfig {
         return new Person();
     }
 
-    @Bean
-    //@DependsOn(value = "b")
-    public A a (){
-        return new A();
-    }
-
-    @Bean
-    //@DependsOn(value = "a")
-    public B b (){
-        return new B();
-    }
 
 }
