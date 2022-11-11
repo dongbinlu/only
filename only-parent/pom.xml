@@ -75,6 +75,7 @@
         <module>only-multids</module>
         <module>only-redis</module>
         <module>only-zk</module>
+        <module>only-rabbitMQ</module>
     </modules>
 
 </project>
