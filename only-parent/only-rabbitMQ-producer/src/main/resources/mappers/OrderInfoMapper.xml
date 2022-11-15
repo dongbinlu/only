@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.only.rabbitMQ.producer.mapper.OrderInfoMapper">
+    <resultMap id="BaseResultMap" type="com.only.rabbitMQ.producer.entity.OrderInfo">
+        <id column="order_no" jdbcType="BIGINT" property="orderNo"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="money" jdbcType="DOUBLE" property="money"/>
+        <result column="product_no" jdbcType="INTEGER" property="productNo"/>
+        <result column="order_status" jdbcType="INTEGER" property="orderStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_no
+        , create_time, update_time, user_name, money, product_no, order_status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from order_info
+        where order_no = #{orderNo,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from order_info
+        where order_no = #{orderNo,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.only.rabbitMQ.producer.entity.OrderInfo">
+        insert into order_info (order_no, create_time, update_time,
+                                user_name, money, product_no,
+                                order_status)
+        values (#{orderNo,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+                #{userName,jdbcType=VARCHAR}, #{money,jdbcType=DOUBLE}, #{productNo,jdbcType=INTEGER},
+                #{orderStatus,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.only.rabbitMQ.producer.entity.OrderInfo">
+        insert into order_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="productNo != null">
+                product_no,
+            </if>
+            <if test="orderStatus != null">
+                order_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="productNo != null">
+                #{productNo,jdbcType=INTEGER},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.only.rabbitMQ.producer.entity.OrderInfo">
+        update order_info
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="productNo != null">
+                product_no = #{productNo,jdbcType=INTEGER},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where order_no = #{orderNo,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.only.rabbitMQ.producer.entity.OrderInfo">
+        update order_info
+        set create_time  = #{createTime,jdbcType=TIMESTAMP},
+            update_time  = #{updateTime,jdbcType=TIMESTAMP},
+            user_name    = #{userName,jdbcType=VARCHAR},
+            money        = #{money,jdbcType=DOUBLE},
+            product_no   = #{productNo,jdbcType=INTEGER},
+            order_status = #{orderStatus,jdbcType=INTEGER}
+        where order_no = #{orderNo,jdbcType=BIGINT}
+    </update>
+</mapper>

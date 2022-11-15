@@ -76,6 +76,8 @@
         <module>only-redis</module>
         <module>only-zk</module>
         <module>only-rabbitMQ</module>
+        <module>only-rabbitMQ-consumer</module>
+        <module>only-rabbitMQ-producer</module>
     </modules>
 
 </project>

@@ -1,0 +1,18 @@
+server:
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: rabbitMQ-producer
+
+  profiles:
+    active:
+      - dev
+
+mybatis-plus:
+  type-aliases-package: com.only.rabbitMQ.producer
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+

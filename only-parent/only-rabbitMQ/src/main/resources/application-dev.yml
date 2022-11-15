@@ -1,0 +1,18 @@
+server:
+  port: 8090
+
+
+spring:
+  rabbitmq:
+    host: 10.1.20.73
+    port: 5672
+    username: boy
+    password: boy
+    virtual-host: /v-boy
+    publisher-confirm-type: correlated #开启消息到达交换机的确认机制
+    publisher-returns: true #消息由交换机到达队列时失败触发
+    listener:
+      simple:
+        acknowledge-mode: manual # 手动签收，auto是自动签收，默认行为
+      direct:
+        acknowledge-mode: manual #设置直连交换机的签收类型
