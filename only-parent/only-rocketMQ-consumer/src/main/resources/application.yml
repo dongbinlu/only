@@ -1,0 +1,12 @@
+server:
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: rocketMQ
+
+  profiles:
+    active:
+      - dev
+

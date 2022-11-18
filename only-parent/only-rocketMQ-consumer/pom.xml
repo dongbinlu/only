@@ -12,9 +12,17 @@
     <groupId>com.only.rocketMQ.consumer</groupId>
     <artifactId>only-rocketMQ-consumer</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.only.base</groupId>
+            <artifactId>only-base</artifactId>
+            <version>${only.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>${rocketmq-spring-boot-starter.version}</version>
+        </dependency>
+    </dependencies>
 </project>
