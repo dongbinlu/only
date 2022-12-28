@@ -4,6 +4,7 @@ import com.only.base.constant.OnlyConstants;
 import com.only.netty.Message;
 import com.only.netty.MessageResolverFactory;
 import com.only.netty.Resolver;
+import com.only.netty.entity.ClientInfo;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -19,6 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 /**
  * 自定义Handler需要继承netty规定好的某个HandlerAdapter(规范)
  */
@@ -26,6 +30,9 @@ import org.springframework.stereotype.Component;
 @ChannelHandler.Sharable
 @Slf4j
 public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
+
+
+    private static ConcurrentMap<Channel, ClientInfo> clientInfos = new ConcurrentHashMap<>();
 
     int readIdleTimes = 0;
 
@@ -41,6 +48,28 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
      * GlobalEventExecutor.INSTANCE是全局的事件执行器，是一个单例
      */
     public static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
+    /**
+     * 握手建立
+     *
+     * @param ctx
+     * @throws Exception
+     */
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        super.handlerAdded(ctx);
+    }
+
+    /**
+     * 握手取消
+     *
+     * @param ctx
+     * @throws Exception
+     */
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        super.handlerRemoved(ctx);
+    }
 
     /**
      * 表示channel处于就绪状态，提示上线
@@ -60,6 +89,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object obj) throws Exception {
 
+        // 文本消息
         if (obj instanceof TextWebSocketFrame) {
 
             TextWebSocketFrame textWebSocketFrame = (TextWebSocketFrame) obj;
@@ -80,10 +110,12 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
             Resolver resolver = messageResolverFactory.getMessageResolver(request);
 
             /**
-             * 弹幕、聊天室
+             * 弹幕、群聊聊天室
              */
             if (null == resolver) {
                 channelGroup.forEach(ch -> {
+
+                    // 群聊聊天室
                     // 不是当前的channel,转发消息
                     if (channel != ch) {
                         ch.writeAndFlush(new TextWebSocketFrame(value));
@@ -188,5 +220,4 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
         log.error("cause:", cause);
         ctx.close();
     }
-
 }
