@@ -1,0 +1,42 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      auto-commit: true
+      minimum-idle: 5
+      idle-timeout: 60000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      pool-name: DatebookHikariCP
+      maximum-pool-size: 30
+      jdbc-url: jdbc:mysql://localhost:3306/seata-store?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: prex_tx_group
+    nacos:
+      discovery:
+        server-addr: 10.1.20.73:8848
+
+logging:
+  level:
+    com:
+      only:
+        seata:
+          store:
+            mapper: debug
+ribbon:
+  eager-load:
+    enabled: true
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
