@@ -2,29 +2,48 @@ package com.only.test.thread;
 
 import lombok.SneakyThrows;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class Test {
 
 
-    private static ExecutorService service = new ThreadPoolExecutor(5, 10, 3L, TimeUnit.MINUTES,
-            new LinkedBlockingQueue<Runnable>());
+    private static ThreadPoolExecutor service = new ThreadPoolExecutor(
+            10,
+            16,
+            3L, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<Runnable>(),
+            Executors.defaultThreadFactory(),
+            new ThreadPoolExecutor.AbortPolicy());
 
+    private static ScheduledThreadPoolExecutor scheduled = new ScheduledThreadPoolExecutor(
+            10,
+            Executors.defaultThreadFactory(),
+            new ThreadPoolExecutor.AbortPolicy());
 
     @SneakyThrows
     public static void main(String[] args) {
+        MyRunnable myRunnable = new MyRunnable();
+        service.submit(myRunnable);
+        //System.out.println(10 % 13);
 
-        Task task = new Task();
-        //service.execute(task);
-        //
-        //Thread.sleep(1 * 1000L);
+        //scheduled.schedule(myRunnable,
+        //        1,
+        //        TimeUnit.SECONDS);
 
-        ThreadPool threadPool = new ThreadPool();
+        //scheduled.scheduleAtFixedRate(myRunnable,
+        //        1,
+        //        3,
+        //        TimeUnit.SECONDS);
 
-        threadPool.execute(task);
+
+        //scheduled.scheduleWithFixedDelay(myRunnable,
+        //        1,
+        //        3,
+        //        TimeUnit.SECONDS);
+
+
+
+        System.out.println(10 << 7);
 
     }
 

@@ -1,9 +1,22 @@
 package com.only.test.thread;
 
-public class Task implements Runnable {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.concurrent.Callable;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Task implements Callable<Integer> {
+
+    private int x;
+
+    private int y;
 
     @Override
-    public void run() {
-        System.out.println("我的任务");
+    public Integer call() throws Exception {
+        return x + y;
     }
 }
