@@ -21,6 +21,7 @@ public class Diao implements InvocationHandler {
         if ("fly".equals(methodName)) {
             System.out.println("增强了fly");
         }
+        //第一个参数是一个对象。此对象可以为：①方法持有者；②方法持有者的继承者
 
         return method.invoke(bird, args);
     }
