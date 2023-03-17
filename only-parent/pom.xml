@@ -95,6 +95,7 @@
         <module>only-product-center</module>
         <module>only-seata-order</module>
         <module>only-seata-store</module>
+        <module>only-thread-pool-executor</module>
     </modules>
 
 </project>
