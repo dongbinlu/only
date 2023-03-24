@@ -7,7 +7,7 @@ public class OnlyProxy {
 
     public static void main(String[] args) {
 
-        Bird bird = (Bird) Proxy.newProxyInstance(Bird.class.getClassLoader(),
+        Bird bird = (Bird) Proxy.newProxyInstance(OnlyProxy.class.getClassLoader(),
                 new Class[]{Bird.class},
                 new Diao(new Ying()));
 

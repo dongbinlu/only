@@ -19,6 +19,7 @@ public class OnlyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
         for (String name : beanFactory.getBeanDefinitionNames()) {
             if ("com.only.test.bean.Dog".equals(name)) {
                 BeanDefinition beanDefinition = beanFactory.getBeanDefinition(name);
+                // 设置为懒加载后，容器启动并不会实例化Dog对象，而是第一次使用时创建，但是Bean定义已经加载到容器中去了。
                 beanDefinition.setLazyInit(true);
             }
 

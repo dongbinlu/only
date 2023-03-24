@@ -15,8 +15,10 @@ public class Test {
             }
         });
 
-        Object obj = ctx.getBean("catFactoryBean");
-        System.out.println(obj);
+        A a = ctx.getBean("a", A.class);
+
+        System.out.println("```````````````````" + a + "`````````````````");
+        System.out.println("```````````````````" + a.b + "`````````````````");
 
 
         ctx.close();

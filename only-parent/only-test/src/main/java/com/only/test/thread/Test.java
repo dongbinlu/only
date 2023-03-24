@@ -1,7 +1,5 @@
 package com.only.test.thread;
 
-import lombok.SneakyThrows;
-
 import java.util.concurrent.*;
 
 public class Test {
@@ -20,20 +18,29 @@ public class Test {
             Executors.defaultThreadFactory(),
             new ThreadPoolExecutor.AbortPolicy());
 
-    @SneakyThrows
+    //@SneakyThrows
     public static void main(String[] args) {
         MyRunnable myRunnable = new MyRunnable();
-        service.submit(myRunnable);
+        //service.submit(myRunnable);
+        //service.execute(myRunnable);
         //System.out.println(10 % 13);
 
         //scheduled.schedule(myRunnable,
         //        1,
         //        TimeUnit.SECONDS);
 
-        //scheduled.scheduleAtFixedRate(myRunnable,
-        //        1,
-        //        3,
-        //        TimeUnit.SECONDS);
+        ScheduledFuture<?> scheduledFuture = scheduled.scheduleAtFixedRate(myRunnable,
+                1,
+                3,
+                TimeUnit.SECONDS);
+
+        try {
+            Object o = scheduledFuture.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
 
         //scheduled.scheduleWithFixedDelay(myRunnable,
@@ -42,8 +49,7 @@ public class Test {
         //        TimeUnit.SECONDS);
 
 
-
-        System.out.println(10 << 7);
+        //System.out.println(10 << 7);
 
     }
 
