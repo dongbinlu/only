@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: es-platform
+  datasource:
+    url: jdbc:mysql://192.168.50.163:3306/test?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 20
+      min-idle: 10
+      max-active: 30
+      test-on-borrow: true
+      stat-view-servlet:
+        allow: true
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  redis:
+    host: 192.168.50.163
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-idle: 10
+        max-active: 1000
+        max-wait: -1
+        min-idle: 0
+    timeout: 6000
+
+mybatis:
+  type-aliases-package: com.safecode.es.mapper
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+      safecode:
+        es:
+          mapper: debug

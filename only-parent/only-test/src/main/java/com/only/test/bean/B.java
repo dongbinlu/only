@@ -2,6 +2,7 @@ package com.only.test.bean;
 
 public class B {
 
+    private String x;
 
     private A a;
 
@@ -10,8 +11,8 @@ public class B {
         System.out.println("B的构造器");
     }
 
-
-    public void setA(A a) {
-        this.a = a;
+    public void setX(String x) {
+        this.x = x;
     }
+
 }

@@ -1,0 +1,27 @@
+server:
+  port: 8050
+
+spring:
+  application:
+    name: order-api
+  cloud:
+    sentinel:
+      transport:
+        port: 8719 #8719这个端口是当我们启动order-api时候，同时sentinel会在8719再启一个应用，用这个端口去和dashboard127.0.0.1:8090；去通讯
+        dashboard: 127.0.0.1:8090 # 告诉order-api  sentinel的控制台在127.0.0.1:8090
+
+security:
+  oauth2:
+    client:
+      client-id: order-api
+      client-secret: 123456
+    resource:
+      jwt:
+        #源码org.springframework.security.oauth2.provider.endpoint.TokenKeyEndpoint
+        key-uri: http://auth.safecode.com:8030/oauth/token_key
+
+#客户端和zookeeper进行通讯配置        
+sentinel:
+  zookeeper:
+    address: 127.0.0.1:2181
+    path: /sentinel_rule_config

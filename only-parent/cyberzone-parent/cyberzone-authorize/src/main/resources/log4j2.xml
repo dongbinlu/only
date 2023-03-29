@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <appenders>
+        <!--这个输出控制台的配置-->
+        <Console name="STDOUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!-- 输出日志的格式-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p [%t] [%logger{50}:%L] - %msg%n" charset="UTF-8"/>
+        </Console>
+        <!--sql专用输出-->
+        <Console name="STDOUT2">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%logger{50}:%L] - %msg%n"
+                           charset="UTF-8"/>
+        </Console>
+
+
+        <RollingRandomAccessFile name="FILE-INFO" fileName="logs/cyberzone-authorize-info.log"
+                                 filePattern="logs/cyberzone-authorize-info.%d{yyyy-MM-dd-HH}.log">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p [%t] [%logger{50}:%L] - %msg%n" charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy interval="1"/>
+            <DefaultRolloverStrategy max="1">
+                <Delete basePath="logs" maxDepth="2">
+                    <IfFileName glob="*cyberzone-authorize-info.*.log"/>
+                    <IfLastModified age="1h"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+
+        <RollingRandomAccessFile name="FILE-DEBUG" fileName="logs/cyberzone-authorize-debug.log"
+                                 filePattern="logs/cyberzone-authorize-debug.%d{yyyy-MM-dd-HH}.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p [%t] [%logger{50}:%L] - %msg%n" charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy interval="1"/>
+            <DefaultRolloverStrategy max="1">
+                <Delete basePath="logs" maxDepth="2">
+                    <IfFileName glob="*cyberzone-authorize-debug.*.log"/>
+                    <IfLastModified age="1h"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="FILE-WARN" fileName="logs/cyberzone-authorize-warn.log"
+                                 filePattern="logs/cyberzone-authorize-warn.%d{yyyy-MM-dd-HH}.log">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p [%t] [%logger{50}:%L] - %msg%n" charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy interval="1"/>
+            <DefaultRolloverStrategy max="1">
+                <Delete basePath="logs" maxDepth="2">
+                    <IfFileName glob="*cyberzone-authorize-warn.*.log"/>
+                    <IfLastModified age="1h"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="FILE-ERROR" fileName="logs/cyberzone-authorize-error.log"
+                                 filePattern="logs/cyberzone-authorize-error.%d{yyyy-MM-dd-HH}.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %5p [%t] [%logger{50}:%L] - %msg%n" charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy interval="1"/>
+            <DefaultRolloverStrategy max="1">
+                <Delete basePath="logs" maxDepth="2">
+                    <IfFileName glob="*cyberzone-authorize-error.*.log"/>
+                    <IfLastModified age="1h"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </appenders>
+
+    <loggers>
+
+        <!-- 将业务dao接口填写进去,并用控制台输出即可 -->
+        <AsyncLogger name="com.safecode.cyberzone.authorize.mapper" level="debug" additivity="false">
+            <AppenderRef ref="STDOUT2"/>
+        </AsyncLogger>
+
+        <!--swagger 杂乱 无用，所以关闭-->
+        <AsyncLogger name="springfox" level="OFF"></AsyncLogger>
+
+        <!--includeLocation="true" :打印出行号-->
+        <AsyncRoot level="INFO" includeLocation="true">
+            <AppenderRef ref="FILE-INFO"/>
+            <AppenderRef ref="FILE-WARN"/>
+            <AppenderRef ref="FILE-ERROR"/>
+            <AppenderRef ref="STDOUT"/>
+        </AsyncRoot>
+
+    </loggers>
+</configuration>

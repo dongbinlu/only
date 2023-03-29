@@ -1,0 +1,26 @@
+server:
+  port: 8060
+
+spring:
+  application:
+    name: is-admin
+  mvc:
+    static-path-pattern: /static/**
+  freemarker:
+    cache: false #开发是关闭缓存，不然无法看到实时页面
+    charset: UTF-8
+    suffix: .html #freemarker模板后缀 默认是.ftl
+    enabled: true #是否为此技术启用MVC视图分辨率
+    expose-request-attributes: true
+    expose-session-attributes: true
+    content-type: text/html; charset=utf-8
+    template-loader-path:
+      - classpath:/templates
+
+zuul:
+  routes:
+    api:
+      url: http://gateway.safecode.com:8040
+  sensitive-headers:
+    
+      

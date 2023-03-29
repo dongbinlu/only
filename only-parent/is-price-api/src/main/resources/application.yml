@@ -1,0 +1,23 @@
+server:
+  port: 9082
+
+security:
+  oauth2:
+    client:
+      client-id: price-api
+      client-secret: 123456
+    resource:
+      jwt:
+        #源码org.springframework.security.oauth2.provider.endpoint.TokenKeyEndpoint
+        key-uri: http://auth.safecode.com:8030/oauth/token_key
+
+management:
+  endpoints:
+    promethus:
+      enable: true
+    web:
+      exposure:
+        include:
+          - prometheus
+          - info
+          - health

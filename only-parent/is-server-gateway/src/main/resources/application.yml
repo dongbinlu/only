@@ -1,0 +1,50 @@
+server:
+  port: 8040
+
+zuul:
+  routes:
+    user:
+      url: http://gateway.safecode.com:8040
+    auth:
+      url: http://auth.safecode.com:8030
+    order:
+      url: http://order.safecode.com:8050
+  #敏感头配置 如果不配置，任何头信息都进行路由  敏感头：Cookie Set-Cookie Authorization
+  sensitive-headers:
+
+  #限流配置,一般情况在网关不会做很细腻的限流，主要是在网关上面针对硬件设备的处理能力做限流，比如说在2核的cup下tomcat能处理多少并发请求
+  ratelimit:
+    enabled: true
+    repository: JPA
+    #默认限流策略
+    default-policy-list:
+      #过的请求数，1秒钟能过2个请求
+      - limit: 2
+        #所有的请求加在一起的时间是多少
+        quota: 2
+        #1秒钟之内能接受多少请求
+        refresh-interval: 1
+        #根据什么来控制流量，一般根据url和httpmethod,
+        #/a的get请求1秒钟只能能过2个请求，/b的post请求1秒钟只能能过2个请求
+        type:
+          - url
+          - httpmethod
+    #针对auth服务做限流策略 , 其他服务没有配置的按照默认的限流策略
+    policy-list:
+      auth:
+        - limit: 2
+          quota: 2
+          refresh-interval: 1
+
+spring:
+  application:
+    name: gateway-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=GMT
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    generate-ddl: true
+    show-sql: true

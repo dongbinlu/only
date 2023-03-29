@@ -1,0 +1,36 @@
+server:
+  port: 8040
+
+zuul:
+  routes:
+    user:
+      url: http://gateway.safecode.com:8040
+    auth:
+      url: http://auth.safecode.com:8030
+    order:
+      url: http://order.safecode.com:8050
+  #敏感头配置 如果不配置，任何头信息都进行路由
+  sensitive-headers:
+
+spring:
+  application:
+    name: gateway-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=GMT
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    generate-ddl: true
+    show-sql: true
+
+security:
+  oauth2:
+    client:
+      client-id: gateway
+      client-secret: 123456
+    resource:
+      jwt:
+        #源码org.springframework.security.oauth2.provider.endpoint.TokenKeyEndpoint
+        key-uri: http://auth.safecode.com:8030/oauth/token_key

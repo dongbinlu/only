@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.safecode.cyberzone.auth.mapper.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.safecode.cyberzone.auth.entity.SysUser">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="mail" property="mail" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="dept_id" property="deptId" jdbcType="INTEGER"/>
+        <result column="gender" property="gender" jdbcType="INTEGER"/>
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="job" property="job" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="account_non_expired" property="accountNonExpired" jdbcType="INTEGER"/>
+        <result column="credentials_non_expired" property="credentialsNonExpired" jdbcType="INTEGER"/>
+        <result column="account_non_locked" property="accountNonLocked" jdbcType="INTEGER"/>
+        <result column="old_password" property="oldPassword" jdbcType="VARCHAR"/>
+        <result column="credentials_expired" property="credentialsExpired" jdbcType="TIMESTAMP"/>
+        <result column="signature" property="signature" jdbcType="VARCHAR"/>
+        <result column="face_id" property="faceId" jdbcType="VARCHAR"/>
+        <result column="face_perm" property="facePerm" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
+        <result column="operate_ip" property="operateIp" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, account, username, telephone, mail, password, dept_id, gender, company, job, icon,
+        status,account_non_expired, credentials_non_expired, account_non_locked, old_password,credentials_expired,
+        signature, face_id, face_perm, remark, operator, operate_time,
+        operate_ip
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.safecode.cyberzone.auth.entity.SysUser">
+        insert into sys_user (id, account, username, telephone,
+        mail, password, dept_id,
+        gender, company, job, icon,
+        status,account_non_expired, credentials_non_expired,
+        account_non_locked, old_password,credentials_expired, signature, face_id, face_perm, remark, operator,
+        operate_time, operate_ip)
+        values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+        #{telephone,jdbcType=VARCHAR},
+        #{mail,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{deptId,jdbcType=INTEGER},
+        #{gender,jdbcType=INTEGER},#{company,jdbcType=VARCHAR},#{job,jdbcType=VARCHAR},#{icon,jdbcType=VARCHAR},
+        #{signature,jdbcType=VARCHAR}, #{faceId,jdbcType=VARCHAR}, #{facePerm,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{accountNonExpired,jdbcType=INTEGER}, #{credentialsNonExpired,jdbcType=INTEGER},
+        #{accountNonLocked,jdbcType=INTEGER}, #{oldPassword,jdbcType=VARCHAR},#{credentialsExpired,jdbcType=TIMESTAMP},
+        #{remark,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR},
+        #{operateTime,jdbcType=TIMESTAMP}, #{operateIp,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.safecode.cyberzone.auth.entity.SysUser">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="mail != null">
+                mail,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="deptId != null">
+                dept_id,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="company != null">
+                company,
+            </if>
+            <if test="job != null">
+                job,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="accountNonExpired != null">
+                account_non_expired,
+            </if>
+            <if test="credentialsNonExpired != null">
+                credentials_non_expired,
+            </if>
+            <if test="accountNonLocked != null">
+                account_non_locked,
+            </if>
+            <if test="oldPassword != null">
+                old_password,
+            </if>
+            <if test="credentialsExpired != null">
+                credentials_expired,
+            </if>
+            <if test="signature != null">
+                signature,
+            </if>
+            <if test="faceId != null">
+                face_id,
+            </if>
+            <if test="facePerm != null">
+                face_perm,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="operateTime != null">
+                operate_time,
+            </if>
+            <if test="operateIp != null">
+                operate_ip,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="mail != null">
+                #{mail,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="deptId != null">
+                #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="company != null">
+                #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="accountNonExpired != null">
+                #{accountNonExpired,jdbcType=INTEGER},
+            </if>
+            <if test="credentialsNonExpired != null">
+                #{credentialsNonExpired,jdbcType=INTEGER},
+            </if>
+            <if test="accountNonLocked != null">
+                #{accountNonLocked,jdbcType=INTEGER},
+            </if>
+            <if test="oldPassword != null">
+                #{oldPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="credentialsExpired != null">
+                #{credentialsExpired,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signature != null">
+                #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="faceId != null">
+                #{faceId,jdbcType=VARCHAR},
+            </if>
+            <if test="facePerm != null">
+                #{facePerm,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operateIp != null">
+                #{operateIp,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.safecode.cyberzone.auth.entity.SysUser">
+        update sys_user
+        <set>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="mail != null">
+                mail = #{mail,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="company != null">
+                company = #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                job = #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="accountNonExpired != null">
+                account_non_expired = #{accountNonExpired,jdbcType=INTEGER},
+            </if>
+            <if test="credentialsNonExpired != null">
+                credentials_non_expired = #{credentialsNonExpired,jdbcType=INTEGER},
+            </if>
+            <if test="accountNonLocked != null">
+                account_non_locked = #{accountNonLocked,jdbcType=INTEGER},
+            </if>
+            <if test="oldPassword != null">
+                old_password = #{oldPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="credentialsExpired != null">
+                credentials_expired = #{credentialsExpired,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signature != null">
+                signature = #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="faceId != null">
+                face_id = #{faceId,jdbcType=VARCHAR},
+            </if>
+            <if test="facePerm != null">
+                face_perm = #{facePerm,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operateIp != null">
+                operate_ip = #{operateIp,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.safecode.cyberzone.auth.entity.SysUser">
+        update sys_user
+        set account = #{account,jdbcType=VARCHAR},
+        username = #{username,jdbcType=VARCHAR},
+        telephone = #{telephone,jdbcType=VARCHAR},
+        mail = #{mail,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        dept_id = #{deptId,jdbcType=INTEGER},
+        gender = #{gender,jdbcType=INTEGER},
+        company = #{company,jdbcType=VARCHAR},
+        job = #{job,jdbcType=VARCHAR},
+        icon = #{icon,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        account_non_expired = #{accountNonExpired,jdbcType=INTEGER},
+        credentials_non_expired = #{credentialsNonExpired,jdbcType=INTEGER},
+        account_non_locked = #{accountNonLocked,jdbcType=INTEGER},
+        old_password = #{oldPassword,jdbcType=VARCHAR},
+        credentials_expired = #{credentialsExpired,jdbcType=TIMESTAMP},
+        signature = #{signature,jdbcType=VARCHAR},
+        face_id = #{faceId,jdbcType=VARCHAR},
+        face_perm = #{facePerm,jdbcType=INTEGER},
+        remark = #{remark,jdbcType=VARCHAR},
+        operator = #{operator,jdbcType=VARCHAR},
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+        operate_ip = #{operateIp,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="findByKeyword" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_user
+        WHERE account = #{keyword}
+        OR mail = #{keyword} OR telephone = #{keyword}
+    </select>
+</mapper>

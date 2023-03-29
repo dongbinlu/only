@@ -22,11 +22,11 @@ public class OnlyLogAspect {
     public void methodAfter(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         System.out.println("执行目标方法【" + methodName + "】之前执行<后置通知>,入参" + Arrays.asList(joinPoint.getArgs()));
-       }
+    }
 
     @AfterReturning(value = "pointCut()")
     public void methodReturning(JoinPoint joinPoint) {
-                                       String methodName = joinPoint.getSignature().getName();
+        String methodName = joinPoint.getSignature().getName();
         System.out.println("执行目标方法【" + methodName + "】之前执行<返回通知>,入参" + Arrays.asList(joinPoint.getArgs()));
     }
 

@@ -1,0 +1,15 @@
+server:
+  port: 8030
+  servlet:
+    session:
+      timeout: 2592000 #一个月，这个session会在数据库存一个月时间，在这一个月的时间内，用户不需要登录
+
+spring:
+  application:
+    name: auth-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=GMT
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource

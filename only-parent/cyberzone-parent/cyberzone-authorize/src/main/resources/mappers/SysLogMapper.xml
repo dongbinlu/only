@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.safecode.cyberzone.authorize.mapper.SysLogMapper">
+    <resultMap id="BaseResultMap" type="com.safecode.cyberzone.authorize.entity.SysLog">
+        <id column="id_" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="ip_" property="ip" jdbcType="VARCHAR"/>
+        <result column="log_status" property="logStatus" jdbcType="VARCHAR"/>
+        <result column="remark_" property="remark" jdbcType="VARCHAR"/>
+        <result column="project_name" property="projectName" jdbcType="VARCHAR"/>
+        <result column="request_url" property="requestUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.safecode.cyberzone.authorize.entity.SysLog" extends="BaseResultMap">
+        <result column="request_object" property="requestObject" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id_, user_id, user_name, create_time, ip_,log_status, remark_, project_name, request_url
+    </sql>
+    <sql id="Blob_Column_List">
+        request_object
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from sys_log
+        where id_ = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from sys_log
+        where id_ = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.safecode.cyberzone.authorize.entity.SysLog">
+        insert into sys_log (id_, user_id, user_name,
+        create_time, ip_,log_status, remark_,
+        project_name, request_url, request_object
+        )
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR},#{logStatus,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{projectName,jdbcType=VARCHAR}, #{requestUrl,jdbcType=VARCHAR}, #{requestObject,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.safecode.cyberzone.authorize.entity.SysLog">
+        insert into sys_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id_,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="ip != null">
+                ip_,
+            </if>
+            <if test="logStatus != null">
+                log_status,
+            </if>
+            <if test="remark != null">
+                remark_,
+            </if>
+            <if test="projectName != null">
+                project_name,
+            </if>
+            <if test="requestUrl != null">
+                request_url,
+            </if>
+            <if test="requestObject != null">
+                request_object,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="logStatus != null">
+                #{logStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="projectName != null">
+                #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="requestUrl != null">
+                #{requestUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="requestObject != null">
+                #{requestObject,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.safecode.cyberzone.authorize.entity.SysLog">
+        update sys_log
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ip != null">
+                ip_ = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="logStatus != null">
+                log_status = #{logStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark_ = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="projectName != null">
+                project_name = #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="requestUrl != null">
+                request_url = #{requestUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="requestObject != null">
+                request_object = #{requestObject,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id_ = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.safecode.cyberzone.authorize.entity.SysLog">
+        update sys_log
+        set user_id = #{userId,jdbcType=BIGINT},
+        user_name = #{userName,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        ip_ = #{ip,jdbcType=VARCHAR},
+        log_status = #{logStatus,jdbcType=VARCHAR},
+        remark_ = #{remark,jdbcType=VARCHAR},
+        project_name = #{projectName,jdbcType=VARCHAR},
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+        request_object = #{requestObject,jdbcType=LONGVARCHAR}
+        where id_ = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.safecode.cyberzone.authorize.entity.SysLog">
+        update sys_log
+        set user_id = #{userId,jdbcType=BIGINT},
+        user_name = #{userName,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        ip_ = #{ip,jdbcType=VARCHAR},
+        log_status = #{logStatus,jdbcType=VARCHAR},
+        remark_ = #{remark,jdbcType=VARCHAR},
+        project_name = #{projectName,jdbcType=VARCHAR},
+        request_url = #{requestUrl,jdbcType=VARCHAR}
+        where id_ = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

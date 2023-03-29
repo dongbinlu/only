@@ -1,0 +1,15 @@
+server:
+  port: 8030
+  servlet:
+    session:
+      timeout: 2592000
+
+spring:
+  application:
+    name: auth-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=GMT
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource

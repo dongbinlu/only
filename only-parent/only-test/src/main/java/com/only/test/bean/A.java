@@ -4,13 +4,12 @@ public class A {
 
     public B b;
 
-    public A(B b) {
-        this.b = b;
+    public A() {
         System.out.println("A的构造器");
     }
 
+    public void setB(B b) {
+        this.b = b;
+    }
 
-    //public void setB(B b) {
-    //    this.b = b;
-    //}
 }

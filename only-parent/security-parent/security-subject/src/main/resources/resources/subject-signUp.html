@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>subject注册页</title>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <div id="test"></div>
+    <script>
+        $(function () {
+            $.ajax({
+                //请求方式
+                type: "GET",
+                //文件位置
+                url: "/social/user",
+                //返回数据格式为json,也可以是其他格式如
+                dataType: "json",
+                //请求成功后要执行的函数，拼接html
+                success: function (data) {
+                    var str = "<ul>";
+                    $.each(data, function (i, n) {
+                        str += "<li>" + i + "：" + n + "</li>";
+                    });
+                    str += "</ul>";
+                    $("div").append(str);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<h2>subject注册页</h2>
+<h3>注册</h3>
+<form action="/regist" method="post">
+    <table>
+        <tr>
+            <td>用户名:</td>
+            <td><input type="text" name="username"></td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td><input type="password" name="password"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit" name="type"
+                        value="regist">注册
+                </button>
+            </td>
+            <td colspan="2">
+                <button type="submit" name="type"
+                        value="binding">绑定
+                </button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
