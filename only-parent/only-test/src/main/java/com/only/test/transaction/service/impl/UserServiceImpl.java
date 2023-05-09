@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private RoleDao roleDao;
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void insert(User user, Role role) {
         userDao.insert(user);
         //int x = 1/0;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = RuntimeException.class)
     public void insertRole(Role role) {
         try {
             roleDao.insert(role);

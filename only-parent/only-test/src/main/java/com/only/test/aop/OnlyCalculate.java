@@ -11,7 +11,7 @@ public class OnlyCalculate implements Calculate {
         //Calculate currentProxy = (Calculate)AopContext.currentProxy();
         //currentProxy.reduce(numA, numB);
         System.out.println("开始执行add方法了");
-        //int i =1/0;
+        int i =1/0;
         return numA + numB;
     }
 

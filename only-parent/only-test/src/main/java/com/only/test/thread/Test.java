@@ -1,15 +1,17 @@
 package com.only.test.thread;
 
+import lombok.SneakyThrows;
+
 import java.util.concurrent.*;
 
 public class Test {
 
 
     private static ThreadPoolExecutor service = new ThreadPoolExecutor(
-            10,
-            16,
-            3L, TimeUnit.SECONDS,
-            new LinkedBlockingQueue<Runnable>(),
+            1,
+            1,
+            0L, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<Runnable>(1),
             Executors.defaultThreadFactory(),
             new ThreadPoolExecutor.AbortPolicy());
 
@@ -20,7 +22,25 @@ public class Test {
 
     //@SneakyThrows
     public static void main(String[] args) {
-        MyRunnable myRunnable = new MyRunnable();
+
+        Task task = new Task(1, 1);
+
+        Future<Integer> future = service.submit(task);
+
+        try {
+            Integer result = future.get(3, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        } finally {
+            future.cancel(true);
+        }
+
+
+        //MyRunnable myRunnable = new MyRunnable();
         //service.submit(myRunnable);
         //service.execute(myRunnable);
         //System.out.println(10 % 13);
@@ -29,7 +49,7 @@ public class Test {
         //        1,
         //        TimeUnit.SECONDS);
 
-        ScheduledFuture<?> scheduledFuture = scheduled.scheduleAtFixedRate(myRunnable,
+       /* ScheduledFuture<?> scheduledFuture = scheduled.scheduleAtFixedRate(myRunnable,
                 1,
                 3,
                 TimeUnit.SECONDS);
@@ -41,7 +61,7 @@ public class Test {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
+*/
 
         //scheduled.scheduleWithFixedDelay(myRunnable,
         //        1,

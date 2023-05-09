@@ -17,6 +17,7 @@ public class Task implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
+        Thread.sleep(6 * 1000L);
         return x + y;
     }
 }

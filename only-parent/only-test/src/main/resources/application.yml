@@ -16,6 +16,10 @@ spring:
     format:
       date: yyyy-MM-dd HH:mm:ss
     static-path-pattern: /static/**
+  task:
+    scheduling:
+      pool:
+        size: 20
 #  thymeleaf:
 #    cache: false
 #    prefix: classpath:/templates/
