@@ -52,7 +52,7 @@
             <groupId>com.gome.spring.compents</groupId>
             <artifactId>dynamo</artifactId>
             <scope>system</scope>
-            <systemPath>${basedir}\..\dynamo.jar</systemPath>
+            <systemPath>${basedir}/../dynamo.jar</systemPath>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

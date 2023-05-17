@@ -4,11 +4,11 @@ server:
 
 spring:
   rabbitmq:
-    host: 10.1.20.73
+    host: 127.0.0.1
     port: 5672
     username: boy
     password: boy
-    virtual-host: /v-boy
+    virtual-host: /mall
     publisher-confirm-type: correlated #开启消息到达交换机的确认机制
     publisher-returns: true #消息由交换机到达队列时失败触发
     listener:

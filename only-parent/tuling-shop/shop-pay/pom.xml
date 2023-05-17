@@ -142,14 +142,14 @@
             <artifactId>alipay-trade-sdk</artifactId>
             <version>20161215</version>
             <scope>system</scope>
-            <systemPath>${basedir}\..\alipay-trade-sdk-20161215.jar</systemPath>
+            <systemPath>${basedir}/../alipay-trade-sdk-20161215.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.alipay</groupId>
             <artifactId>alipay-sdk-java</artifactId>
             <version>3.3.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}\..\alipay-sdk-java-3.3.0.jar</systemPath>
+            <systemPath>${basedir}/../alipay-sdk-java-3.3.0.jar</systemPath>
         </dependency>
         <!-- 银联使用bcprov-jdk16 -->
         <dependency>
