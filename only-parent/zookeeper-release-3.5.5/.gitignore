@@ -91,3 +91,7 @@ logs/
 log
 temp/
 
+conf/data/1/version-2
+conf/data/2/version-2
+conf/data/3/version-2
+conf/data/version-2
