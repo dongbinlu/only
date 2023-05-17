@@ -1,6 +1,6 @@
 package com.only.test.mybatis.service;
 
-import com.only.test.mybatis.User;
+import com.only.test.mybatis.entity.User;
 
 public interface UserService {
 

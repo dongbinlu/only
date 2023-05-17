@@ -4,11 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <settings>
+        <!--开启驼峰命名适配-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--开启二级缓存-->
         <setting name="cacheEnabled" value="true"/>
     </settings>
     <plugins>
-        <plugin interceptor="com.only.test.mybatis.PagePlugin"></plugin>
+        <plugin interceptor="com.only.test.mybatis.plugin.PagePlugin"></plugin>
     </plugins>
     <environments default="development">
         <environment id="development">
@@ -23,8 +25,8 @@
     </environments>
     <mappers>
         <!-- mapper接口扫描包-->
-        <mapper resource="com/only/test/mybatis/mapper/UserMapper.xml"></mapper>
-        <mapper resource="com/only/test/mybatis/mapper/RoleMapper.xml"></mapper>
-        <!--        <package name="com.only.test.mybatis.mapper"></package>-->
+        <package name="com.only.test.mybatis.mapper"></package>
+        <!--  <mapper resource="com/only/test/mybatis/mapper/UserMapper.xml"></mapper>
+          <mapper resource="com/only/test/mybatis/mapper/RoleMapper.xml"></mapper>-->
     </mappers>
 </configuration>

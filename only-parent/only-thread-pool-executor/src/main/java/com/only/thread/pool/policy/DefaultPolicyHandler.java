@@ -1,7 +1,7 @@
 package com.only.thread.pool.policy;
 
 import com.only.thread.pool.OnlyThreadPoolExecutor;
-import com.sun.xml.internal.ws.policy.PolicyException;
+import com.only.thread.pool.execption.PolicyException;
 
 
 public class DefaultPolicyHandler implements PolicyHandler {

@@ -1,6 +1,7 @@
 package com.only.thread.pool;
 
-import com.sun.xml.internal.ws.policy.PolicyException;
+
+import com.only.thread.pool.execption.PolicyException;
 
 public interface OnlyExecutorService {
 

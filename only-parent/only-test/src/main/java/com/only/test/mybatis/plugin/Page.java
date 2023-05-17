@@ -1,4 +1,4 @@
-package com.only.test.mybatis;
+package com.only.test.mybatis.plugin;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -10,15 +10,15 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <bean id="a" class="com.only.test.bean.A">
-        <property name="b" ref="b"></property>
-        <!-- <constructor-arg name="b" ref="b"></constructor-arg>-->
-    </bean>
-    <bean id="b" class="com.only.test.bean.B">
-        <property name="x" value="hahaha"></property>
-        <!--<property name="a" ref="a"></property>-->
-        <!--<constructor-arg name="a" ref="a"></constructor-arg>-->
-    </bean>
+    <!--<bean id="a" class="com.only.test.bean.A">
+        <property name="b" ref="b"></property>-->
+    <!-- <constructor-arg name="b" ref="b"></constructor-arg>-->
+    <!--  </bean>-->
+    <!-- <bean id="b" class="com.only.test.bean.B">
+         <property name="x" value="hahaha"></property>-->
+    <!--<property name="a" ref="a"></property>-->
+    <!--<constructor-arg name="a" ref="a"></constructor-arg>-->
+    <!-- </bean>-->
     <!--
     <bean id="instanceA" class="com.only.test.ioc.InstanceA">
         <constructor-arg name="instanceB" ref="instanceB"></constructor-arg>
@@ -52,21 +52,21 @@
         <property name="mapperInterface" value="com.only.test.mybatis.mapper.UserMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
-    <!--    结合AOP，实现事务的植入-->
-    <!--    配置事务的类-->
-    <!--    <tx:advice id="txAdvice" transaction-manager="transactionManager">-->
-    <!--        &lt;!&ndash;        给哪些方法配置事务&ndash;&gt;-->
-    <!--        <tx:attributes>-->
-    <!--            <tx:method name="addUser"/>-->
-    <!--            <tx:method name="deleteUser"/>-->
-    <!--        </tx:attributes>-->
-    <!--    </tx:advice>-->
+    <!--  结合AOP，实现事务的植入
+      配置事务的类-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!--        给哪些方法配置事务-->
+        <tx:attributes>
+            <tx:method name="addUser"/>
+            <tx:method name="deleteUser"/>
+        </tx:attributes>
+    </tx:advice>
 
-    <!--    &lt;!&ndash;    配置事务的切入&ndash;&gt;-->
-    <!--    <aop:config>-->
-    <!--        <aop:pointcut id="txPoint" expression="execution(* mapper.*.*(..))"/>-->
-    <!--        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>-->
-    <!--    </aop:config>-->
+    <!--    配置事务的切入-->
+<!--    <aop:config>
+        <aop:pointcut id="txPoint" expression="execution(* mapper.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+    </aop:config>-->
 
 
 </beans>

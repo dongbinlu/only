@@ -1,15 +1,15 @@
-server:
-  port: 8080
-  ssl:
-    key-store: classpath:boy.key
-    key-store-password: 123456
-    key-password: 123456
+#server:
+#  port: 8080
+#  ssl:
+#    key-store: classpath:boy.key
+#    key-store-password: 123456
+#    key-password: 123456
 
 spring:
   application:
     name: user-api
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&&serverTimezone=Hongkong
+    url: jdbc:mysql://127.0.0.1:3306/is-user-api?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&&serverTimezone=Hongkong
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

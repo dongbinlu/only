@@ -1,4 +1,4 @@
-package com.only.test.mybatis;
+package com.only.test.mybatis.plugin;
 
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;

@@ -1,6 +1,6 @@
 package com.only.test.mybatis.mapper;
 
-import com.only.test.mybatis.User;
+import com.only.test.mybatis.entity.User;
 import org.apache.ibatis.annotations.Update;
 
 public interface RoleMapper {

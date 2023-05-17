@@ -1,6 +1,6 @@
 package com.only.test.mybatis.service;
 
-import com.only.test.mybatis.User;
+import com.only.test.mybatis.entity.User;
 import com.only.test.mybatis.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
     @Transactional()
     public User getUser2(Integer userId) {
         userMapper.getByUserId(userId);
-        return userMapper.getByUserId(userId);
+        User user = userMapper.getByUserId(userId);
+        return user;
     }
 
     @Override

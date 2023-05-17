@@ -1,6 +1,6 @@
 package com.only.test.algorithm.aes;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -106,8 +106,7 @@ public class AesDemo {
         byte[] bytes = cipher.doFinal(input.getBytes());
 
         // 输出加密后的数据
-        String encode = Base64.encode(bytes);
-
+        String encode = Base64.encodeBase64String(bytes);
         return encode;
     }
 
@@ -128,8 +127,7 @@ public class AesDemo {
         SecretKeySpec sks = new SecretKeySpec(key.getBytes(), algorithm);
         cipher.init(Cipher.DECRYPT_MODE, sks);
         // 3. 解密
-        byte[] bytes = cipher.doFinal(Base64.decode(input));
-
+        byte[] bytes = cipher.doFinal(Base64.decodeBase64(input));
         return new String(bytes);
     }
 }

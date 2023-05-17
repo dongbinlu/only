@@ -1,12 +1,9 @@
 package com.safecode.security.user.filter;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.lambdaworks.crypto.SCryptUtil;
+import com.safecode.security.user.dao.UserRepository;
+import com.safecode.security.user.entity.User;
+import com.safecode.security.user.entity.UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -14,10 +11,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.lambdaworks.crypto.SCryptUtil;
-import com.safecode.security.user.dao.UserRepository;
-import com.safecode.security.user.entity.User;
-import com.safecode.security.user.entity.UserInfo;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component
 @Order(2)

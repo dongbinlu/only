@@ -2,6 +2,7 @@ package com.safecode.security.user.entity;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.Data;
@@ -20,6 +21,7 @@ public class UserInfo {
     private String username;
 
     @NotBlank(message = "密码不能为空")
+    @JsonIgnore
     private String password;
 
     private String permissions;

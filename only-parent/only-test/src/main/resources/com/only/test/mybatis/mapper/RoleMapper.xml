@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.only.test.mybatis.mapper.RoleMapper">
-    <resultMap id="BaseResultMap" type="com.only.test.mybatis.Role">
+    <resultMap id="BaseResultMap" type="com.only.test.mybatis.entity.Role">
         <id column="role_id" property="roleId"/>
         <result column="role_name" property="roleName"/>
     </resultMap>
@@ -16,7 +16,7 @@
     <select id="getByRoleId" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        from role where role_id = #{roleId}"
+        from role where role_id = #{roleId}
     </select>
 
     <select id="getByRoleName" resultMap="BaseResultMap" parameterType="map">
