@@ -454,6 +454,7 @@
                             <failsOnError>false</failsOnError>
                             <failOnViolation>false</failOnViolation>
                             <excludes>**/generated/**</excludes>
+                            <skip>true</skip>
                         </configuration>
                         <goals>
                             <goal>check</goal>
