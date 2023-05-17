@@ -13,5 +13,5 @@ node_modules
 test/derby.log
 derby.log
 .github
-distribution/data/
+distribution/data/*
 doc
