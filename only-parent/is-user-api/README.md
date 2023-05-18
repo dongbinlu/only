@@ -1,0 +1,3 @@
+基于HttpBasic认证
+需要在http请求头中添加Authorization,value为Basic Ym95OjEyMzQ=
+Type为Basic Auth
