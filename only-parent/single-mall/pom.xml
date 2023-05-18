@@ -17,6 +17,7 @@
         <module>mall-search</module>
         <module>mall-portal</module>
         <module>mall-member</module>
+        <module>mall-order</module>
     </modules>
 
     <parent>
