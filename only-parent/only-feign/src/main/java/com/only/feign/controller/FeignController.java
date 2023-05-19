@@ -14,7 +14,7 @@ public class FeignController {
     @Autowired
     private ProductRemoteCall productRemoteCall;
 
-    @RequestMapping("/hehe")
+    @RequestMapping("/remote/call")
     public ProductInfo test() {
         ProductInfo productInfo = new ProductInfo();
         productInfo.setProductName("华为p40");

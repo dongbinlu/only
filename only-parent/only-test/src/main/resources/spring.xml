@@ -35,7 +35,7 @@
     <!--    扫描包-->
     <context:component-scan base-package="com.only.test.mybatis"/>
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <constructor-arg name="url" value="jdbc:mysql://127.0.0.1:3306/dms"></constructor-arg>
+        <constructor-arg name="url" value="jdbc:mysql://127.0.0.1:3306/only"></constructor-arg>
         <constructor-arg name="username" value="root"></constructor-arg>
         <constructor-arg name="password" value="root"></constructor-arg>
     </bean>

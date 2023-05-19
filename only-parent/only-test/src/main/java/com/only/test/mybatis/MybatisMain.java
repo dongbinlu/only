@@ -1,7 +1,7 @@
 package com.only.test.mybatis;
 
-import com.google.common.collect.Maps;
 import com.only.test.mybatis.entity.User;
+import com.only.test.mybatis.mapper.RoleMapper;
 import com.only.test.mybatis.mapper.UserMapper;
 import com.only.test.mybatis.plugin.Page;
 import org.apache.commons.io.FileUtils;
@@ -21,8 +21,12 @@ public class MybatisMain {
 
     @Before
     public void before() throws Exception {
-        FileInputStream inputStream = FileUtils.openInputStream(new File("D:\\only\\only-parent\\only-test\\src\\main\\java\\com\\only\\test\\mybatis\\mybatis-config.xml"));
+        FileInputStream inputStream = FileUtils.openInputStream(new File("src/main/java/com/only/test/mybatis/mybatis-config.xml"));
+        // SqlSessionFactoryBuilder 构建会话工厂，基于mybatis.config.xml,构建完成后即可丢弃。
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        // SqlSessionFactory 用于生成会话的工厂，作用于整个应用运行期间，不需要构建多个，一个会话工厂即可。
+
+        // SqlSesson 作用于单次会话，如web一次请求期间，不能作用于某个对象的一个属性，也不能在多个线程间共享，因为它是线程不安全的。
         session = sqlSessionFactory.openSession(true);
     }
 
@@ -33,11 +37,45 @@ public class MybatisMain {
         System.out.println(list);
     }
 
+    /**
+     * 测试二级缓存
+     * <p>
+     * 如果两个namespace对同一张表进行操作，是否会导致当前namespace的二级缓存失效，答案 不失效
+     */
+    @Test
+    public void testCache()throws Exception {
+
+
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+
+        User user1 = userMapper.getByUserId(1);
+
+        RoleMapper roleMapper = session.getMapper(RoleMapper.class);
+        roleMapper.updateByUserId("taobao",1);
+//        roleMapper.updateByRoleId("huawei", 1);
+
+        session.close();
+
+        Thread thread2 = new Thread(() -> {
+            UserMapper mapper2 = sqlSessionFactory.openSession(true).getMapper(UserMapper.class);
+            User user2 = mapper2.getByUserId(1);
+
+        });
+
+        thread2.start();
+        thread2.join();
+
+
+    }
+
+
     @Test
     public void test() throws Exception {
         UserMapper mapper1 = session.getMapper(UserMapper.class);
         UserMapper mapper2 = session.getMapper(UserMapper.class);
+        System.out.println(mapper1 == mapper2);// false 注意 这个是不一样的，因为每次都会创建一个新的动态代理对象
         User user1 = mapper1.getByUserId(1);
+        User byUserId = mapper1.getByUserId(1);
 
          /*
          如果另一个session并发修改数据，1级缓存还是会生效，不同的session有不通的缓存空间

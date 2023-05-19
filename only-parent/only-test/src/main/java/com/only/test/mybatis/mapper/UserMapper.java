@@ -1,12 +1,8 @@
 package com.only.test.mybatis.mapper;
 
-import com.only.test.mybatis.plugin.Page;
 import com.only.test.mybatis.entity.User;
-import org.apache.ibatis.annotations.CacheNamespace;
+import com.only.test.mybatis.plugin.Page;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.cache.decorators.LruCache;
-import org.apache.ibatis.cache.impl.PerpetualCache;
 
 import java.util.List;
 
@@ -21,10 +17,8 @@ import java.util.List;
 
 public interface UserMapper {
 
-    //@Select("select * from user where user_id = #{userId}")
     User getByUserId(Integer userId);
 
-    @Update("update user set username = #{username} where user_id = #{userId}")
     void updateByUserId(String username, Integer userId);
 
     User getByUsername(String username);

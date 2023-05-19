@@ -6,7 +6,7 @@
     <settings>
         <!--开启驼峰命名适配-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
-        <!--开启二级缓存-->
+        <!--开启二级缓存  只要value不是显示配置为value = false,都会采用CachingExecutor执行器-->
         <setting name="cacheEnabled" value="true"/>
     </settings>
     <plugins>
@@ -17,7 +17,7 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://127.0.0.1:3306/dms"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/only"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>

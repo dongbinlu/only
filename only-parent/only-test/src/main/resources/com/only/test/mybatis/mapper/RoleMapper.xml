@@ -25,4 +25,17 @@
         from role
         where role_name = #{roleName}
     </select>
+
+    <update id="updateByUserId" parameterType="map" flushCache="true">
+
+        update user
+        set username = #{username}
+        where user_id = #{userId}
+    </update>
+    <update id="updateByRoleId" parameterType="map">
+        update role
+        set role_name = #{roleName}
+        where role_id = #{roleId}
+    </update>
+
 </mapper>

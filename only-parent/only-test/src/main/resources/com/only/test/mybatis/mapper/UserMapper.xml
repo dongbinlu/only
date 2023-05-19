@@ -6,7 +6,14 @@
         <result column="username" property="username"/>
     </resultMap>
 
-    <!--<cache></cache>-->
+    <cache></cache>
+
+    <update id="updateByUserId" parameterType="map">
+        update user
+        set username = #{username}
+        where user_id = #{userId}
+    </update>
+
 
     <sql id="Base_Column_List">
         user_id
