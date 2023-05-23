@@ -28,11 +28,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -96,6 +94,14 @@ public class OmsPortalOrderController {
         return secKillOrderService.generateConfirmMiaoShaOrder(productId,memberId,token);
     }
 
+    /**
+     * 下单
+     * @param orderParam
+     * @param token
+     * @param memberId
+     * @return
+     * @throws BusinessException
+     */
     @RequestMapping(value = "/{token}/generateOrder",method = RequestMethod.POST)
     @ResponseBody
     public CommonResult generateMiaoShaOrder(@RequestBody OrderParam orderParam,

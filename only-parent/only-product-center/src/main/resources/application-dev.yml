@@ -10,5 +10,5 @@ spring:
 #          version: v1 # 版本管理（不同版本无法调用，相同版本才能调用）
 #        cluster-name: NJ #集群分组(优先在同一集群下调用)
 #        #        group: pay # 服务分组（不同服务分组无法调用）
-#        namespace: e8aecb58-1b3a-4d08-9cf6-d0bd102dc6bd     #环境隔离，指定命名空间ID，（dev无法调用prod或其他空间）
+#        namespace: c429ccbc-375d-44d7-a175-cad236a9c18e     #环境隔离，指定命名空间ID，（dev无法调用prod或其他空间）
 

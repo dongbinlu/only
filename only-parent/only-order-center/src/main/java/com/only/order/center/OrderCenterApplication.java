@@ -6,6 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
+// 此注解也可以不写
 @EnableDiscoveryClient
 @EnableFeignClients
 public class OrderCenterApplication {

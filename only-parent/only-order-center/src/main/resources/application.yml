@@ -3,9 +3,6 @@ server:
     context-path: /
 
 spring:
-  application:
-    name: order-center
-
   profiles:
     active:
       - dev

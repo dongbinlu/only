@@ -5,7 +5,6 @@ import org.junit.runner.RunWith;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
-import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,7 @@ public class Producer {
 
     @Test
     public void sendMessageToDirect() {
-        rabbitTemplate.convertAndSend("spring-boot-direct",
-                "this is first springboot MQ direct");
+        rabbitTemplate.convertAndSend("spring-boot-direct", "this is first springboot MQ direct");
         System.out.println("消息发送成功");
     }
 
@@ -36,8 +34,7 @@ public class Producer {
     public void sendMessageToWorkQueue() throws InterruptedException {
         for (int i = 0; i < 100; i++) {
 
-            rabbitTemplate.convertAndSend("spring-boot-work-queue",
-                    "this is first springboot MQ work queue " + i);
+            rabbitTemplate.convertAndSend("spring-boot-work-queue", "this is first springboot MQ work queue " + i);
 
         }
         System.out.println("消息发送成功");
@@ -66,23 +63,25 @@ public class Producer {
             }
         });
 
-        rabbitTemplate.setReturnsCallback(new RabbitTemplate.ReturnsCallback() {
+
+        rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
             /**
              * 消息如未正常到达队列里面会回调
-             * @param returnedMessage
              *
              */
             @Override
-            public void returnedMessage(ReturnedMessage returnedMessage) {
+            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
 
-                System.out.println("消息未正常到达队列-message:" + returnedMessage.getMessage());
-                System.out.println("消息未正常到达队列-replyCode:" + returnedMessage.getReplyCode());
-                System.out.println("消息未正常到达队列-replyText:" + returnedMessage.getReplyText());
-                System.out.println("消息未正常到达队列-exchange:" + returnedMessage.getExchange());
-                System.out.println("消息未正常到达队列-rountingKey:" + returnedMessage.getRoutingKey());
+                System.out.println("消息未正常到达队列-message:" + message);
+                System.out.println("消息未正常到达队列-replyCode:" + replyCode);
+                System.out.println("消息未正常到达队列-replyText:" + replyText);
+                System.out.println("消息未正常到达队列-exchange:" + exchange);
+                System.out.println("消息未正常到达队列-rountingKey:" + routingKey);
 
             }
+
         });
+
 
         rabbitTemplate.convertAndSend("spring-boot-fanout-exchange", "", "this is first springboot MQ fanout");
 
@@ -92,23 +91,18 @@ public class Producer {
 
     @Test
     public void sendMessageTORoutingDirect() {
-        rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "info",
-                "this is first springboot MQ rounting-direct-info",
-                new MessagePostProcessor() {
-                    @Override
-                    public Message postProcessMessage(Message message) throws AmqpException {
-                        String messageId = UUID.randomUUID().toString().replace("-", "");
-                        message.getMessageProperties().setMessageId(messageId);
-                        return message;
+        rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "info", "this is first springboot MQ rounting-direct-info", new MessagePostProcessor() {
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException {
+                String messageId = UUID.randomUUID().toString().replace("-", "");
+                message.getMessageProperties().setMessageId(messageId);
+                return message;
 
-                    }
-                });
-        rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "debug",
-                "this is first springboot MQ rounting-direct-debug");
-        rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "error",
-                "this is first springboot MQ rounting-direct-error");
-        rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "warn",
-                "this is first springboot MQ rounting-direct-warn");
+            }
+        });
+        rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "debug", "this is first springboot MQ rounting-direct-debug");
+        rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "error", "this is first springboot MQ rounting-direct-error");
+        rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "warn", "this is first springboot MQ rounting-direct-warn");
         System.out.println("消息发送成功");
     }
 

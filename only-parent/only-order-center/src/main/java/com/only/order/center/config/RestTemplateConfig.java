@@ -13,4 +13,11 @@ public class RestTemplateConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
+
+/*    @Bean
+    public RestTemplate restTemplate(DiscoveryClient discoveryClient) {
+        return new CustomRestTemplate(discoveryClient);
+    }*/
+
 }

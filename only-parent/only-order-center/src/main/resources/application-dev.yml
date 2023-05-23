@@ -3,8 +3,6 @@ server:
 
 
 spring:
-  application:
-    name: order-center
   cloud:
     nacos:
       discovery:
@@ -15,23 +13,23 @@ spring:
         #        group: pay # 服务分组（不同服务分组无法调用）
 #        namespace: e8aecb58-1b3a-4d08-9cf6-d0bd102dc6bd     #环境隔离，指定命名空间ID，（dev无法调用prod或其他空间）
 
-#ribbon:
-#  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
-#  ReadTimeout: 3000 #建立连接超时
-#  ConnectTimeout: 3000 #读取数据超时
-#  MaxAutoRetries: 1 #每一台服务器重试的次数，不包含首次调用的那一次
-#  MaxAutoRetriesNextServer: 2 #重试的服务器的个数，不包含首次调用的那一台实例
-#  OkToRetryOnAllOperations: true #是否对所以的操作进行重试(True 的话会对post put操作进行重试，存在服务幂等问题)
-#  http:
-#    client:
-#      enabled: true
+ribbon:
+  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+  ReadTimeout: 3000 #建立连接超时
+  ConnectTimeout: 3000 #读取数据超时
+  MaxAutoRetries: 1 #每一台服务器重试的次数，不包含首次调用的那一次
+  MaxAutoRetriesNextServer: 2 #重试的服务器的个数，不包含首次调用的那一台实例
+  OkToRetryOnAllOperations: true #是否对所以的操作进行重试(True 的话会对post put操作进行重试，存在服务幂等问题)
+  http:
+    client:
+      enabled: true
 
-#product-center:
-#  ribbon:
-#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
-#pay-center:
-#  ribbon:
-#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+product-center:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+pay-center:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
 
 logging:
   level:
@@ -45,6 +43,9 @@ feign:
     config:
       product-center:
         logger-level: BASIC
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000 #以feign超市说了算
   #        contract: feign.Contract.Default
   httpclient: #feign底层使用httpclient去调用
     enabled: true
