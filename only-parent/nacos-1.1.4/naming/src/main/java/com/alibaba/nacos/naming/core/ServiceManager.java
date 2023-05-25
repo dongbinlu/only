@@ -229,8 +229,7 @@ public class ServiceManager implements RecordListener<Service> {
             try {
                 updatedHealthStatus(namespaceId, serviceName, serverIP);
             } catch (Exception e) {
-                Loggers.SRV_LOG.warn("[DOMAIN-UPDATER] Exception while update service: {} from {}, error: {}",
-                    serviceName, serverIP, e);
+                Loggers.SRV_LOG.warn("[DOMAIN-UPDATER] Exception while update service: {} from {}, error: {}", serviceName, serverIP, e);
             }
         }
     }
@@ -242,8 +241,8 @@ public class ServiceManager implements RecordListener<Service> {
         matchList.add(localRaftPeer);
         Set<String> otherServerSet = raftPeerSet.allServersWithoutMySelf();
         if (null != otherServerSet && otherServerSet.size() > 0) {
-            for (String server: otherServerSet) {
-                String path =  UtilsAndCommons.NACOS_NAMING_OPERATOR_CONTEXT + UtilsAndCommons.NACOS_NAMING_CLUSTER_CONTEXT + "/state";
+            for (String server : otherServerSet) {
+                String path = UtilsAndCommons.NACOS_NAMING_OPERATOR_CONTEXT + UtilsAndCommons.NACOS_NAMING_CLUSTER_CONTEXT + "/state";
                 Map<String, String> params = Maps.newHashMapWithExpectedSize(2);
                 try {
                     String content = NamingProxy.reqCommon(path, params, server, false);
@@ -254,8 +253,7 @@ public class ServiceManager implements RecordListener<Service> {
                         }
                     }
                 } catch (Exception e) {
-                    Loggers.SRV_LOG.warn("[QUERY-CLUSTER-STATE] Exception while query cluster state from {}, error: {}",
-                        server, e);
+                    Loggers.SRV_LOG.warn("[QUERY-CLUSTER-STATE] Exception while query cluster state from {}, error: {}", server, e);
                 }
             }
         }
@@ -322,9 +320,7 @@ public class ServiceManager implements RecordListener<Service> {
             if (valid != instance.isHealthy()) {
                 changed = true;
                 instance.setHealthy(valid);
-                Loggers.EVT_LOG.info("{} {SYNC} IP-{} : {}:{}@{}",
-                    serviceName, (instance.isHealthy() ? "ENABLED" : "DISABLED"),
-                    instance.getIp(), instance.getPort(), instance.getClusterName());
+                Loggers.EVT_LOG.info("{} {SYNC} IP-{} : {}:{}@{}", serviceName, (instance.isHealthy() ? "ENABLED" : "DISABLED"), instance.getIp(), instance.getPort(), instance.getClusterName());
             }
         }
 
@@ -339,8 +335,7 @@ public class ServiceManager implements RecordListener<Service> {
         }
 
         if (changed && Loggers.EVT_LOG.isDebugEnabled()) {
-            Loggers.EVT_LOG.debug("[HEALTH-STATUS-UPDATED] namespace: {}, service: {}, ips: {}",
-                service.getNamespaceId(), service.getName(), stringBuilder.toString());
+            Loggers.EVT_LOG.debug("[HEALTH-STATUS-UPDATED] namespace: {}, service: {}, ips: {}", service.getNamespaceId(), service.getName(), stringBuilder.toString());
         }
 
     }
@@ -471,8 +466,7 @@ public class ServiceManager implements RecordListener<Service> {
         Service service = getService(namespaceId, serviceName);
 
         if (service == null) {
-            throw new NacosException(NacosException.INVALID_PARAM,
-                "service not found, namespace: " + namespaceId + ", service: " + serviceName);
+            throw new NacosException(NacosException.INVALID_PARAM, "service not found, namespace: " + namespaceId + ", service: " + serviceName);
         }
 
         addInstance(namespaceId, serviceName, instance.isEphemeral(), instance);
@@ -483,8 +477,7 @@ public class ServiceManager implements RecordListener<Service> {
         Service service = getService(namespaceId, serviceName);
 
         if (service == null) {
-            throw new NacosException(NacosException.INVALID_PARAM,
-                "service not found, namespace: " + namespaceId + ", service: " + serviceName);
+            throw new NacosException(NacosException.INVALID_PARAM, "service not found, namespace: " + namespaceId + ", service: " + serviceName);
         }
 
         if (!service.allIPs().contains(instance)) {
@@ -531,14 +524,16 @@ public class ServiceManager implements RecordListener<Service> {
     }
 
     public Instance getInstance(String namespaceId, String serviceName, String cluster, String ip, int port) {
+        // 在 Map<namespace, Map<group::serviceName, Service>>中获取
         Service service = getService(namespaceId, serviceName);
         if (service == null) {
             return null;
         }
 
         List<String> clusters = new ArrayList<>();
-        clusters.add(cluster);
+        clusters.add(cluster);// DEFAULT
 
+        // 注意service是从Map中获取出来的，Map是spring容器托管的。
         List<Instance> ips = service.allIPs(clusters);
         if (ips == null || ips.isEmpty()) {
             return null;
@@ -578,8 +573,7 @@ public class ServiceManager implements RecordListener<Service> {
                 Cluster cluster = new Cluster(instance.getClusterName(), service);
                 cluster.init();
                 service.getClusterMap().put(instance.getClusterName(), cluster);
-                Loggers.SRV_LOG.warn("cluster: {} not found, ip: {}, will create new cluster with default configuration.",
-                    instance.getClusterName(), instance.toJSON());
+                Loggers.SRV_LOG.warn("cluster: {} not found, ip: {}, will create new cluster with default configuration.", instance.getClusterName(), instance.toJSON());
             }
 
             if (UtilsAndCommons.UPDATE_INSTANCE_ACTION_REMOVE.equals(action)) {
@@ -592,8 +586,7 @@ public class ServiceManager implements RecordListener<Service> {
         }
 
         if (instanceMap.size() <= 0 && UtilsAndCommons.UPDATE_INSTANCE_ACTION_ADD.equals(action)) {
-            throw new IllegalArgumentException("ip list can not be empty, service: " + service.getName() + ", ip list: "
-                + JSON.toJSONString(instanceMap.values()));
+            throw new IllegalArgumentException("ip list can not be empty, service: " + service.getName() + ", ip list: " + JSON.toJSONString(instanceMap.values()));
         }
 
         return new ArrayList<>(instanceMap.values());
@@ -771,8 +764,7 @@ public class ServiceManager implements RecordListener<Service> {
 
         public void addItem(String serviceName, String checksum) {
             if (StringUtils.isEmpty(serviceName) || StringUtils.isEmpty(checksum)) {
-                Loggers.SRV_LOG.warn("[DOMAIN-CHECKSUM] serviceName or checksum is empty,serviceName: {}, checksum: {}",
-                    serviceName, checksum);
+                Loggers.SRV_LOG.warn("[DOMAIN-CHECKSUM] serviceName or checksum is empty,serviceName: {}, checksum: {}", serviceName, checksum);
                 return;
             }
 

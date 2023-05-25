@@ -15,15 +15,6 @@
  */
 package com.alibaba.nacos.naming.controllers;
 
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -43,13 +34,16 @@ import com.alibaba.nacos.naming.push.ClientInfo;
 import com.alibaba.nacos.naming.push.DataSource;
 import com.alibaba.nacos.naming.push.PushService;
 import com.alibaba.nacos.naming.web.CanDistro;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.util.VersionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.net.InetSocketAddress;
+import java.util.*;
 
 /**
  * Instance operation controller
@@ -232,10 +226,10 @@ public class InstanceController {
             Loggers.SRV_LOG.debug("[CLIENT-BEAT] full arguments: beat: {}, serviceName: {}", clientBeat, serviceName);
         }
 
-        Instance instance = serviceManager.getInstance(namespaceId, serviceName, clientBeat.getCluster(),
-            clientBeat.getIp(),
-            clientBeat.getPort());
+        // 获取客户端实例
+        Instance instance = serviceManager.getInstance(namespaceId, serviceName, clientBeat.getCluster(), clientBeat.getIp(), clientBeat.getPort());
 
+        // 如果实例不存在，则重新注册
         if (instance == null) {
             instance = new Instance();
             instance.setPort(clientBeat.getPort());
@@ -256,7 +250,7 @@ public class InstanceController {
             throw new NacosException(NacosException.SERVER_ERROR,
                 "service not found: " + serviceName + "@" + namespaceId);
         }
-
+        // 更新客户端实例最后心跳时间
         service.processClientBeat(clientBeat);
         result.put("clientBeatInterval", instance.getInstanceHeartBeatInterval());
         return result;

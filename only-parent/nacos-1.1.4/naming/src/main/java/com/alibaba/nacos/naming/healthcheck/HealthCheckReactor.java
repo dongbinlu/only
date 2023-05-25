@@ -51,6 +51,10 @@ public class HealthCheckReactor {
     }
 
     public static void scheduleCheck(ClientBeatCheckTask task) {
+        /**
+         * key: DEFAULT_GROUP@@order-center
+         * value: task；提交完任务后延期5秒（第一个参数）开始执行，前一个任务执行结束后才会执行下一个任务
+         */
         futureMap.putIfAbsent(task.taskKey(), EXECUTOR.scheduleWithFixedDelay(task, 5000, 5000, TimeUnit.MILLISECONDS));
     }
 

@@ -382,6 +382,7 @@ public class DistroConsistencyServiceImpl implements EphemeralConsistencyService
             while (true) {
                 try {
 
+                    // 队列为空时，阻塞
                     Pair pair = tasks.take();
 
                     if (pair == null) {
@@ -395,6 +396,7 @@ public class DistroConsistencyServiceImpl implements EphemeralConsistencyService
 
                     int count = 0;
 
+                    // datumKey : com.alibaba.nacos.naming.iplist.ephemeral.public##DEFAULT_GROUP@@only-order-center
                     if (!listeners.containsKey(datumKey)) {
                         continue;
                     }

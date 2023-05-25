@@ -33,7 +33,7 @@ public class TestController {
 
     @GetMapping("/service/instance/list")
     public List<ServiceInstance> getServiceInstanceList() {
-        List<ServiceInstance> serviceInstanceList = discoveryClient.getInstances("order-center");
+        List<ServiceInstance> serviceInstanceList = discoveryClient.getInstances("only-order-center");
         return serviceInstanceList;
     }
 

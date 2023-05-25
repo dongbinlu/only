@@ -289,11 +289,12 @@ public class Service extends com.alibaba.nacos.api.naming.pojo.Service implement
     public List<Instance> allIPs(List<String> clusters) {
         List<Instance> allIPs = new ArrayList<>();
         for (String cluster : clusters) {
+            // 从service 自己的clusterMap中获取
             Cluster clusterObj = clusterMap.get(cluster);
             if (clusterObj == null) {
                 continue;
             }
-
+            // 从service自己的内存注册表中获取
             allIPs.addAll(clusterObj.allIPs());
         }
 
@@ -454,8 +455,7 @@ public class Service extends com.alibaba.nacos.api.naming.pojo.Service implement
         }
 
         for (Instance ip : ips) {
-            String string = ip.getIp() + ":" + ip.getPort() + "_" + ip.getWeight() + "_"
-                + ip.isHealthy() + "_" + ip.getClusterName();
+            String string = ip.getIp() + ":" + ip.getPort() + "_" + ip.getWeight() + "_" + ip.isHealthy() + "_" + ip.getClusterName();
             ipsString.append(string);
             ipsString.append(",");
         }
