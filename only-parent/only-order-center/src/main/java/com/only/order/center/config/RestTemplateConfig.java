@@ -14,6 +14,11 @@ public class RestTemplateConfig {
         return new RestTemplate();
     }
 
+/*    @Bean
+    public RetryTemplate retryTemplate(){
+        return new RetryTemplate();
+    }*/
+
 
 /*    @Bean
     public RestTemplate restTemplate(DiscoveryClient discoveryClient) {

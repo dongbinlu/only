@@ -44,4 +44,8 @@ gen/
 logs/
 log
 temp/
-data/
+data
+data/config-data
+data/derby-data
+data/naming
+status

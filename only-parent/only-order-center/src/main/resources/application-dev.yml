@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8081
 
 
 spring:
@@ -17,12 +17,12 @@ ribbon:
   NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
   ReadTimeout: 3000 #建立连接超时
   ConnectTimeout: 3000 #读取数据超时
-  MaxAutoRetries: 1 #每一台服务器重试的次数，不包含首次调用的那一次
-  MaxAutoRetriesNextServer: 2 #重试的服务器的个数，不包含首次调用的那一台实例
-  OkToRetryOnAllOperations: true #是否对所以的操作进行重试(True 的话会对post put操作进行重试，存在服务幂等问题)
-  http:
-    client:
-      enabled: true
+#  MaxAutoRetries: 1 #每一台服务器重试的次数，不包含首次调用的那一次
+#  MaxAutoRetriesNextServer: 2 #重试的服务器的个数，不包含首次调用的那一台实例
+#  OkToRetryOnAllOperations: true #是否对所以的操作进行重试(True 的话会对post put操作进行重试，存在服务幂等问题)
+#  http:
+#    client:
+#      enabled: true
 
 product-center:
   ribbon:
@@ -47,7 +47,9 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000 #以feign超市说了算
   #        contract: feign.Contract.Default
-  httpclient: #feign底层使用httpclient去调用
-    enabled: true
-    max-connections: 200 #最大连接数
-    max-connections-per-route: 50 #为每个URL请求设置最大连接数
+#  httpclient: #feign底层使用httpclient去调用
+#    enabled: true
+#    max-connections: 200 #最大连接数
+#    max-connections-per-route: 50 #为每个URL请求设置最大连接数
+
+isNewBusi: 1

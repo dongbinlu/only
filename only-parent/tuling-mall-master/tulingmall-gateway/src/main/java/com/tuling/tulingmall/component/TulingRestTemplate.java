@@ -1,4 +1,4 @@
-package com.tuling.tulingmall.Component;
+package com.tuling.tulingmall.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
