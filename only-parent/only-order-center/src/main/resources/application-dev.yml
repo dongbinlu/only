@@ -12,6 +12,11 @@ spring:
         #        cluster-name: NJ #集群分组(优先在同一集群下调用)
         #        group: pay # 服务分组（不同服务分组无法调用）
 #        namespace: e8aecb58-1b3a-4d08-9cf6-d0bd102dc6bd     #环境隔离，指定命名空间ID，（dev无法调用prod或其他空间）
+    sentinel:
+      transport:
+        port: 8719 #8719这个端口是当我们启动order-center时候，同时sentinel会在8719再启一个应用，用这个端口去和dashboard127.0.0.1:8847；去通讯
+        dashboard: 127.0.0.1:8847 # 告诉order-center  sentinel的控制台在127.0.0.1:8847
+
 
 ribbon:
   NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
@@ -47,9 +52,26 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000 #以feign超市说了算
   #        contract: feign.Contract.Default
-#  httpclient: #feign底层使用httpclient去调用
-#    enabled: true
-#    max-connections: 200 #最大连接数
-#    max-connections-per-route: 50 #为每个URL请求设置最大连接数
+  sentinel:
+    enabled: true
+  hystrix:
+    enabled: true
+  circuitbreaker:
+    enabled: true
+  httpclient: #feign底层使用httpclient去调用
+    enabled: true
+    max-connections: 200 #最大连接数
+    max-connections-per-route: 50 #为每个URL请求设置最大连接数
 
 isNewBusi: 1
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# 是否开启@SentinelRestTemplate注解
+resttemplate:
+  sentinel:
+    enabled: true
+

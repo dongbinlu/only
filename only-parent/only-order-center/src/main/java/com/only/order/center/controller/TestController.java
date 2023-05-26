@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,9 +42,9 @@ public class TestController {
     public String get() {
         System.out.println("order...get");
 
-        restTemplate.getForEntity("http://product-center/test", String.class);
+        ResponseEntity<String> entity = restTemplate.getForEntity("http://product-center/test", String.class);
 
-        return "order";
+        return entity.getBody();
     }
 
     @GetMapping("/product/{id}")

@@ -1,12 +1,12 @@
 package com.only.order.center.custom;
 
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.annotations.Nullable;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.web.client.*;
 

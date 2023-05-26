@@ -18,7 +18,7 @@
         <java.version>1.8</java.version>
         <org.springframework.cloud.version>Greenwich.SR3</org.springframework.cloud.version>
         <spring-cloud-alibaba-dependencies.version>2.1.0.RELEASE</spring-cloud-alibaba-dependencies.version>
-        <org.springframework.boot.version>2.2.2.RELEASE</org.springframework.boot.version>
+        <org.springframework.boot.version>2.1.3.RELEASE</org.springframework.boot.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-io.version>2.8.0</commons-io.version>
@@ -35,6 +35,7 @@
         <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
         <com.alibaba.druid-spring-boot-starter.version>1.1.20</com.alibaba.druid-spring-boot-starter.version>
         <rocketmq-spring-boot-starter.version>2.0.3</rocketmq-spring-boot-starter.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
 
     <!-- 管理MAVEN依赖版本 -->
