@@ -22,7 +22,7 @@ ribbon:
 #  OkToRetryOnAllOperations: true #是否对所以的操作进行重试(True 的话会对post put操作进行重试，存在服务幂等问题)
 #  http:
 #    client:
-#      enabled: true
+#      enabled: true #开启后会使RestTemplateCustomizer不会定制RestTemplate导致没有LoadBalancerIntercepter
 
 product-center:
   ribbon:
