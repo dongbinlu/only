@@ -461,6 +461,12 @@ public class ServiceManager implements RecordListener<Service> {
      */
     public void registerInstance(String namespaceId, String serviceName, Instance instance) throws NacosException {
 
+        /**
+         * 注意这里 细节很到位，他是往内存里放了一个Map<namespace, Map<group::serviceName, Service>>
+         * 这样一个结构，注意这里的Service，仅仅是一个服务而已，并不是具体的客户端实例，Service里只有一些
+         * 服务名称，namespace,groupName一些信息，并没有具体的IP和端口，具体的IP和端口在instance对象中，
+         * 最终通过addInstance方法才往内存中放入真正的实例。
+         */
         createEmptyService(namespaceId, serviceName, instance.isEphemeral());
 
         Service service = getService(namespaceId, serviceName);
