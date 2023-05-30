@@ -1,4 +1,4 @@
-package com.only.order.center.exception;
+package com.only.order.center.handler;
 
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowException;

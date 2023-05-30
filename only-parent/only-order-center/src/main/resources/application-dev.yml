@@ -16,6 +16,37 @@ spring:
       transport:
         port: 8719 #8719这个端口是当我们启动order-center时候，同时sentinel会在8719再启一个应用，用这个端口去和dashboard127.0.0.1:8847；去通讯
         dashboard: 127.0.0.1:8847 # 告诉order-center  sentinel的控制台在127.0.0.1:8847
+      datasource:
+        flow:
+          nacos:
+            serverAddr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-flow-rules
+            groupId: SENTINEL_GROUP
+            ruleType: FLOW
+        degrade:
+          nacos:
+            serverAddr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-degrade-rules
+            groupId: SENTINEL_GROUP
+            ruleType: DEGRADE
+        system:
+          nacos:
+            serverAddr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-system-rules
+            groupId: SENTINEL_GROUP
+            ruleType: SYSTEM
+        authority:
+          nacos:
+            serverAddr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-authority-rules
+            groupId: SENTINEL_GROUP
+            ruleType: AUTHORITY
+        param-flow:
+          nacos:
+            serverAddr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-param-rules
+            groupId: SENTINEL_GROUP
+            ruleType: PARAM_FLOW
 
 
 ribbon:
@@ -29,12 +60,12 @@ ribbon:
 #    client:
 #      enabled: true #开启后会使RestTemplateCustomizer不会定制RestTemplate导致没有LoadBalancerIntercepter
 
-product-center:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
-pay-center:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+#product-center:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#pay-center:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
 
 logging:
   level:

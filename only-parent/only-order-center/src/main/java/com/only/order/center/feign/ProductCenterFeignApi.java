@@ -1,7 +1,7 @@
 package com.only.order.center.feign;
 
 import com.only.order.center.config.FeignConfig;
-import com.only.order.center.exception.FeignSentinelFallbackHandler;
+import com.only.order.center.handler.FeignSentinelFallbackHandler;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +13,5 @@ public interface ProductCenterFeignApi {
 
     @GetMapping("/{id}")
     String product(@PathVariable("id") Integer id);
-
 
 }
