@@ -43,11 +43,12 @@ public class ClassPathRemoteCallScanner extends ClassPathBeanDefinitionScanner {
         for (BeanDefinitionHolder holder : beanDefinitions) {
             //获取我们的bean定义
             definition = (GenericBeanDefinition) holder.getBeanDefinition();
-            //获取我们的bean定义的名称
+            //获取我们的beanclass的名称
             String beanClassName = definition.getBeanClassName();
 
-            //修改具体的bean定义
+            // 修改具体的beanclass，修改为FactoryBean
             definition.setBeanClass(remoteCallFactoryBeanClass);
+            // 将接口beanclass 通过构造方法传入
             definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName);
             definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
         }
