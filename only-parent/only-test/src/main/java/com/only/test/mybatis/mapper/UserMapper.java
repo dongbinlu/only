@@ -26,5 +26,7 @@ public interface UserMapper {
     @Select("select * from user where username = #{username}")
     List<User> getByUsernameTPage(String username, Page page);
 
+    void saveUser(User user);
+
 
 }

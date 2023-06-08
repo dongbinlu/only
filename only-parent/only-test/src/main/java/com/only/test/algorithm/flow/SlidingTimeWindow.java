@@ -1,6 +1,7 @@
 package com.only.test.algorithm.flow;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * 滑动时间窗口限流
@@ -14,31 +15,44 @@ public class SlidingTimeWindow {
     LinkedList<Long> slots = new LinkedList<Long>();
 
 
-    public boolean limit() {
+    public boolean doCheck() throws Exception {
 
-        counter++;
-
-        slots.addLast(counter);
-
-        if (slots.size() > 10) {
-            slots.removeFirst();
+        while (true) {
+            slots.addLast(counter);
+            if (slots.size() > 10) {
+                slots.removeFirst();
+            }
+            if ((slots.peekLast() - slots.peekFirst()) > limit) {
+                System.out.println("限流了");
+            } else {
+                System.out.println("ok");
+            }
+            Thread.sleep(100L);
         }
-        // 比较最后一个和第一个，两者相差100就限流
-        return (slots.peekLast() - slots.peekFirst()) < limit ? true : false;
 
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow();
 
-        while (true) {
-            if (slidingTimeWindow.limit()) {
-                System.out.println("hello");
-            } else {
-                System.out.println("nonono");
+
+        new Thread(() -> {
+
+            try {
+                slidingTimeWindow.doCheck();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+
+        }).start();
+
+        // 模拟web请求
+        while (true) {
+            slidingTimeWindow.counter++;
+            Thread.sleep(new Random().nextInt(15));
         }
 
     }

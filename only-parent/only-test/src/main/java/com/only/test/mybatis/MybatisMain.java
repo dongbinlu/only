@@ -5,6 +5,7 @@ import com.only.test.mybatis.mapper.RoleMapper;
 import com.only.test.mybatis.mapper.UserMapper;
 import com.only.test.mybatis.plugin.Page;
 import org.apache.commons.io.FileUtils;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
+import java.util.UUID;
 
 public class MybatisMain {
     SqlSessionFactory sqlSessionFactory = null;
@@ -121,6 +123,55 @@ public class MybatisMain {
 
 
     }
+
+    @Test
+    public void testBatchInsertByBatch(){
+
+        sqlSessionFactory.getConfiguration().setDefaultExecutorType(ExecutorType.BATCH);
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10000; i++) {
+
+            User user = User.builder()
+                    .username(UUID.randomUUID().toString())
+                    .build();
+
+            userMapper.saveUser(user);
+        }
+        System.out.println("耗时：" + (System.currentTimeMillis() - start));// 1665
+
+        sqlSession.commit();
+
+
+    }
+
+    @Test
+    public void testBatchInsertBySimple(){
+
+        sqlSessionFactory.getConfiguration().setDefaultExecutorType(ExecutorType.SIMPLE);
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10000; i++) {
+
+            User user = User.builder()
+                    .username(UUID.randomUUID().toString())
+                    .build();
+
+            userMapper.saveUser(user);
+        }
+        System.out.println("耗时：" + (System.currentTimeMillis() - start));// 12128
+
+        sqlSession.commit();
+
+
+    }
+
 
 
 }
