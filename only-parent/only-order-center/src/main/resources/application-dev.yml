@@ -14,7 +14,7 @@ spring:
 #        namespace: e8aecb58-1b3a-4d08-9cf6-d0bd102dc6bd     #环境隔离，指定命名空间ID，（dev无法调用prod或其他空间）
     sentinel:
       transport:
-        port: 8719 #8719这个端口是当我们启动order-center时候，同时sentinel会在8719再启一个应用，用这个端口去和dashboard127.0.0.1:8847；去通讯
+        port: 8719 #8719这个端口是当我们启动order-center时候，同时开启socket监控端口，实时监控sentinel发送的请求，用这个端口去和dashboard127.0.0.1:8847；去通讯
         dashboard: 127.0.0.1:8847 # 告诉order-center  sentinel的控制台在127.0.0.1:8847
       datasource:
         flow:

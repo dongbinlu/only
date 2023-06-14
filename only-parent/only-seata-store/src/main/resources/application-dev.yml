@@ -11,7 +11,7 @@ spring:
       max-lifetime: 1800000
       pool-name: DatebookHikariCP
       maximum-pool-size: 30
-      jdbc-url: jdbc:mysql://localhost:3306/seata-store?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      jdbc-url: jdbc:mysql://localhost:3306/seata-store?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false&useInformationSchema=false
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,7 +21,7 @@ spring:
         tx-service-group: prex_tx_group
     nacos:
       discovery:
-        server-addr: 10.1.20.73:8848
+        server-addr: 127.0.0.1:8848
 
 logging:
   level:

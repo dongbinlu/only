@@ -6,12 +6,10 @@ import com.only.seata.order.entity.Order;
 import com.only.seata.order.mapper.OrderMapper;
 import com.only.seata.order.service.IOrderService;
 import io.seata.core.context.RootContext;
-import io.seata.spring.annotation.GlobalLock;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -57,7 +55,7 @@ public class OrderServiceImpl implements IOrderService {
         remoteAccountService.reduceBalance(order.getUserId(), order.getPayMoney());
         log.info("扣减余额结束");*/
 
-        //System.out.println(1/0);
+//        System.out.println(1/0);
         //修改订单状态为已完成
         log.info("修改订单状态开始");
         orderMapper.updateOrderStatusById(order.getId(), 1);

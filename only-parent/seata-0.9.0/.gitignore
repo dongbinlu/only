@@ -26,9 +26,9 @@ dependency-reduced-pom.xml
 *.diff
 *.patch
 *.tmp
-/distribution/bin
-/distribution/conf
-/distribution/lib
+#/distribution/bin
+#/distribution/conf
+#/distribution/lib
 /server/*root.*
 /server/.root.*
 /server/sessionStore/
