@@ -99,6 +99,7 @@
         <module>only-seata-store</module>
         <module>only-thread-pool-executor</module>
         <module>only-feign</module>
+        <module>only-gateway</module>
     </modules>
 
 </project>

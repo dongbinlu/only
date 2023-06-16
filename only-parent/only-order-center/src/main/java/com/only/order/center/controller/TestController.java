@@ -38,11 +38,11 @@ public class TestController {
         return serviceInstanceList;
     }
 
-    @GetMapping
+    @GetMapping("/get")
     public String get() {
         System.out.println("order...get");
 
-        ResponseEntity<String> entity = restTemplate.getForEntity("http://product-center/test", String.class);
+        ResponseEntity<String> entity = restTemplate.getForEntity("http://product-center/test/get", String.class);
 
         return entity.getBody();
     }

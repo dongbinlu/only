@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: only-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: 10.3.10.130:8848
+        file-extension: yml
+        shared-dataids: common.yml,common2.yml
+        refreshable-dataids: common.yml,common2.yml
+        ext-config:
+          - dataId: common3.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - dataId: common4.yml
+            group: DEFAULT_GROUP
+            refresh: true
+
+  profiles:
+    active:
+      - dev

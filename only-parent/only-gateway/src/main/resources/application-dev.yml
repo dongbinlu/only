@@ -1,0 +1,54 @@
+server:
+  port: 8888
+
+
+spring:
+  application:
+    name: only-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 8723 #8719这个端口是当我们启动order-center时候，同时开启socket监控端口，实时监控sentinel发送的请求，用这个端口去和dashboard127.0.0.1:8847；去通讯
+        dashboard: 127.0.0.1:8847 # 告诉order-center  sentinel的控制台在127.0.0.1:8847
+      datasource:
+        flow:
+          nacos:
+            serverAddr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-gateway-rules
+            groupId: SENTINEL_GROUP
+            ruleType: FLOW
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true # 开启gateway从nacos获取服务列表
+      routes:
+        - id: only-order-center
+          uri: lb://only-order-center
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=1
+        - id: product-center
+          uri: lb://product-center
+          predicates:
+            - Path=/product/**
+          filters:
+            - StripPrefix=1
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always # 打开端点详情
+

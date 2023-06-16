@@ -22,7 +22,7 @@ public class TestController {
         return serviceInstanceList;
     }
 
-    @GetMapping
+    @GetMapping("/get")
     public String get() {
         System.out.println("product...get");
         return "product";
