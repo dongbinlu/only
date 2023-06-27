@@ -100,6 +100,7 @@
         <module>only-thread-pool-executor</module>
         <module>only-feign</module>
         <module>only-gateway</module>
+        <module>only-mvc</module>
     </modules>
 
 </project>

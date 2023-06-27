@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!--<bean name="/hello.do" class="com.only.mvc.controller.SimpleController"/>-->
+
+    <bean name="simpleController" class="com.only.mvc.controller.SimpleController"/>
+
+    <!--适配器必须配置，不然容器里面没有-->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <props>
+                <prop key="/simple.do">simpleController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean name="/servlet.do" class="com.only.mvc.controller.ServletController"></bean>
+    <!--配置映射器，基于IOC中beanName中以/开头的bean进行映射注册-->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+    <!--配置适配器-->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
+    <bean class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter"/>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+
+    <!--自定义异常处理-->
+    <!-- <bean class="com.only.mvc.exception.SimpleExceptionHandle"/>-->
+
+    <!--注解驱动-->
+    <mvc:annotation-driven/>
+    <!--注解配置mvc-->
+    <context:component-scan base-package="com.only.mvc.controller.annotation"/>
+
+</beans>
