@@ -22,3 +22,7 @@ dms:
       dev:
         check:
           status: 3
+only:
+  session:
+    flag: true
+    url: 23r3ogj

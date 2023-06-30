@@ -51,6 +51,12 @@
             <artifactId>spring-retry</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.only.boot.starter</groupId>
+            <artifactId>only-spring-boot-starter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -1,5 +1,6 @@
 package com.only.test.boot.controller;
 
+import com.only.spring.boot.autoconfigure.OnlySessionTemplate;
 import com.only.test.boot.DevManage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+    
+    @Autowired
+    private OnlySessionTemplate onlySessionTemplate;
 
 
     @Autowired
@@ -26,6 +30,11 @@ public class TestController {
         timeoutHolder.remove();
 
         return timeout;
+    }
+
+    @GetMapping("/starter")
+    public Object starter(){
+        return onlySessionTemplate.delete();
     }
 
 }
