@@ -4,9 +4,9 @@ server:
 spring:
 
   redis:
-    host: 10.1.30.153
+    host: 127.0.0.1
     port: 6379
-    password: shudunR@6379edis
+#    password:
     lettuce:
       pool:
         max-idle: 10

@@ -19,8 +19,9 @@ spring:
   rabbitmq: #rabbitmq相关配置
     host: 127.0.0.1
     port: 15672
-    username: guest
-    password: guest
+    username: boy
+    password: boy
+    virtual-host: /mall
 mybatis:
   mapper-locations:
     - classpath:dao/*.xml

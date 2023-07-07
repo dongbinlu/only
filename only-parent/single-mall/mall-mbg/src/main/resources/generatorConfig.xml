@@ -29,15 +29,19 @@
             <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
-
-        <javaModelGenerator targetPackage="com.macro.mall.domain" targetProject="mall-order\src\main\java"/>
-
-        <sqlMapGenerator targetPackage="com.macro.mall.mapper" targetProject="mall-order\src\main\resources"/>
-
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--生成模型entity-->
+        <javaModelGenerator targetPackage="com.macro.mall.domain" targetProject="/Users/ludongbin/workspace/only/only-parent/single-mall/mall-member/src/main/java"/>
+        <!-- 生成映射文件-->
+        <sqlMapGenerator targetPackage="com.macro.mall.mapper" targetProject="/Users/ludongbin/workspace/only/only-parent/single-mall/mall-member/src/main/resources/com/macro/mall/mapper"/>
+        <!-- 生成Mapper-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.macro.mall.mapper"
-                             targetProject="mall-order\src\main\java"/>
+                             targetProject="/Users/ludongbin/workspace/only/only-parent/single-mall/mall-member/src/main/java"/>
+
         <!--生成全部表tableName设为%,指定前缀ums_%-->
-        <table tableName="oms_order_item" enableCountByExample="true" enableUpdateByExample="true"
+        <table tableName="order_info" domainObjectName="OrderInfo" enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
             <!-- generatedKey用于生成生成主键的方法，

@@ -22,6 +22,12 @@ public class Cluster {
     }
 
     @Test
+    public void testExits(){
+        Boolean flag = stringRedisTemplate.hasKey("boys");
+        System.out.println(flag);
+    }
+
+    @Test
     public void get(){
         String value = stringRedisTemplate.opsForValue().get("boy");
         System.out.println(value);
