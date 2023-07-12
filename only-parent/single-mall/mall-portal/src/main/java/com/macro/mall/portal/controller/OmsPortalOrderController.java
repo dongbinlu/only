@@ -128,6 +128,11 @@ public class OmsPortalOrderController {
         return portalOrderService.cancelTimeOutOrder();
     }
 
+    /**
+     * MQ的业务逻辑是什么？？？未知
+     * @param orderId
+     * @return
+     */
     @ApiOperation("取消单个超时订单")
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
     @ResponseBody

@@ -8,6 +8,7 @@ public class TestBeatReactor {
         BeatReactor beatReactor = new BeatReactor();
 
         beatReactor.addBeatInfo("boy");
+        beatReactor.addBeatInfo("girl");
 
     }
 

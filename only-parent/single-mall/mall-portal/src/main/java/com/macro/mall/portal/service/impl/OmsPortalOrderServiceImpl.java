@@ -280,6 +280,13 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         return CommonResult.success(portalOrderDao.getDetail(orderId));
     }
 
+    /**
+     * 是否超卖的保障：在这里允许超卖，如果发生超卖，补货即可。
+     * 如果不想超卖，提示并退款
+     * @param orderId
+     * @param payType
+     * @return
+     */
     @Override
     public Integer paySuccess(Long orderId, Integer payType) {
         //修改订单支付状态
@@ -660,6 +667,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
     private void lockStock(List<CartPromotionItem> cartPromotionItemList) {
         for (CartPromotionItem cartPromotionItem : cartPromotionItemList) {
             PmsSkuStock skuStock = skuStockMapper.selectByPrimaryKey(cartPromotionItem.getProductSkuId());
+            // 扣减锁定库存
             skuStock.setLockStock(skuStock.getLockStock() + cartPromotionItem.getQuantity());
             skuStockMapper.updateByPrimaryKeySelective(skuStock);
         }

@@ -18,7 +18,7 @@ public class BeatReactor {
             @Override
             public Thread newThread(Runnable r) {
                 Thread thread = new Thread(r);
-                thread.setDaemon(true);
+                thread.setDaemon(false);
                 thread.setName("com.only.beat");
                 return thread;
             }
@@ -44,7 +44,7 @@ public class BeatReactor {
             System.out.println(name + "执行了" + "threadName: " + Thread.currentThread().getName());
 
 
-            executorService.schedule(new BeatTask(name), 5, TimeUnit.SECONDS);
+//            executorService.schedule(new BeatTask(name), 5, TimeUnit.SECONDS);
 
         }
     }
