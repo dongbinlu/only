@@ -99,10 +99,10 @@ public class TradeServiceImpl implements TradeService {
         String body = String.format("购买商品%s件共%s元", orderDetail.getItemList().size(), orderDetail.getPayAmount().toString());
 
         // 商户操作员编号，添加此参数可以为商户操作员做销售统计
-        String operatorId = "yangguo";
+        String operatorId = "blueboy";
 
         // (必填) 商户门店编号，通过门店号和商家后台可以配置精准到门店的折扣信息，详询支付宝技术支持
-        String storeId = "tuling-yangguo";
+        String storeId = "only-blueboy";
 
         // 业务扩展参数，目前可添加由支付宝分配的系统商编号(通过setSysServiceProviderId方法)，详情请咨询支付宝技术支持
         ExtendParams extendParams = new ExtendParams();
@@ -145,6 +145,7 @@ public class TradeServiceImpl implements TradeService {
                 // 需要修改为运行机器上的路径
                 String filePath = String.format(tradePayProp.getAliPayPath() + "/qr-%s.png",
                         response.getOutTradeNo());
+                // /Users/ludongbin/Downloads/qr-code/alipay/qr-***.png
                 String storePath = tradePayProp.getStorePath() + filePath;
                 log.info("storePath:" + storePath);
                 //创建二维码
@@ -164,6 +165,7 @@ public class TradeServiceImpl implements TradeService {
                 log.error("不支持的交易状态，交易返回异常!!!");
                 break;
         }
+        // /static/qrcode/alipay/qr-***.png
         return qrCodePath;
     }
 

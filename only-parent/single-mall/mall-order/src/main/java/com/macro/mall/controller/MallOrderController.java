@@ -47,6 +47,7 @@ public class MallOrderController extends BaseController {
     private TradeService tradeService;
 
     /**
+     * 下单，返回支付二维码
      * @param orderDetail
      * @return
      * @throws BusinessException

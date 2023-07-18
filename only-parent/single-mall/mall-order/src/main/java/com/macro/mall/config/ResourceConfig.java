@@ -38,8 +38,9 @@ public class ResourceConfig implements WebMvcConfigurer {
                     + "/**")
                     .addResourceLocations("file:" + tradePayProp.getStorePath() + "/");
         } else { //linux或者mac
-            registry.addResourceHandler("/static/resources/**")
-                    .addResourceLocations("file:/usr/local/resources/"); //静态资源
+            registry.addResourceHandler(tradePayProp.getHttpBasePath()
+                            + "/**")
+                    .addResourceLocations("file:" + tradePayProp.getStorePath() + "/"); //静态资源
             //.addResourceLocations("classpath:/META-INF/resources/"); //swagger2页面
         }
     }

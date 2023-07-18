@@ -1,8 +1,8 @@
 server:
-  port: 8088
+  port: 80
 spring:
   datasource:
-    url: jdbc:mysql://192.168.232.198:3306/micromall?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:3306/micromall?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: root
     druid:
@@ -15,9 +15,9 @@ spring:
         login-username: druid
         login-password: druid
   redis:
-    host: 192.168.232.198
+    host: 127.0.0.1
     port: 6379
-    password: # Redis\u670D\u52A1\u5668\u5730\u5740
+#    password: # Redis\u670D\u52A1\u5668\u5730\u5740
     timeout: 5000ms
     lettuce:
       pool:
@@ -37,6 +37,6 @@ trade:
     qrcode:
       aliPayPath: /alipay
       weChatPath: /wechat
-      storePath: C:/temp/qr-code
+      storePath: /Users/ludongbin/Downloads/qr-code
       httpBasePath: /static/qrcode
-      paySuccessCallBack: http://yangguo.natapp1.cc/order/paySuccess
+      paySuccessCallBack: http://yxqtd8.natappfree.cc/order/paySuccess
