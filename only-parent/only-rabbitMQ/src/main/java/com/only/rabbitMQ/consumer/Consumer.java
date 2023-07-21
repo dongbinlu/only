@@ -104,6 +104,32 @@ public class Consumer {
         System.out.println("消费者【2】收到消息： " + content);
     }
 
+    @RabbitListener(bindings={@QueueBinding(
+            value = @Queue("direct-exchange-queue"),
+            exchange = @Exchange(name = "direct-exchange",type = ExchangeTypes.DIRECT),
+            key = {"info"}
+    )})
+    public void receiveMessage(String content,Message message , Channel channel) throws Exception{
+        //消息投递ID
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        System.out.println("投递ID："+ deliveryTag);
+        //消息自定义ID
+        String messageId = message.getMessageProperties().getMessageId();
+        System.out.println("自定义ID："+ messageId);
+        if(content.equals("hello world3")){
+
+            /**
+             * deliveryTag 消息投递ID，要签收的消息ID是多少
+             * multiple 是否批量签收
+             */
+            channel.basicAck(deliveryTag, true);
+            System.out.println("消息签收成功-内容为："+ content);
+        }
+        System.out.println("--------------------------------------------------");
+
+    }
+
+
 
     @RabbitListener(queues = {"new.queue"})
     public void receiveDelayedMessage(String content,Message message , Channel channel) throws Exception{

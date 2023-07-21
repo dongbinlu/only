@@ -75,15 +75,17 @@ public class RedisConifg implements InitializingBean {
         //todo  获取所有的秒杀活动中商品
         FlashPromotionParam promotion = flashPromotionProductDao.getFlashPromotion(null);
         Date now = new Date();
-        Date endDate = promotion.getEndDate();//结束时间
-        final Long expired = endDate.getTime()-now.getTime();//剩余时间
-        //秒杀商品库存缓存到redis
-        promotion.getRelation().stream().forEach((item)->{
-            redisOpsUtil().setIfAbsent(
-                    RedisKeyPrefixConst.MIAOSHA_STOCK_CACHE_PREFIX + item.getProductId()
-                    , item.getFlashPromotionCount()
-                    , expired
-                    , TimeUnit.MILLISECONDS);
-        });
+        if(promotion != null){
+            Date endDate = promotion.getEndDate();//结束时间
+            final Long expired = endDate.getTime()-now.getTime();//剩余时间
+            //秒杀商品库存缓存到redis
+            promotion.getRelation().stream().forEach((item)->{
+                redisOpsUtil().setIfAbsent(
+                        RedisKeyPrefixConst.MIAOSHA_STOCK_CACHE_PREFIX + item.getProductId()
+                        , item.getFlashPromotionCount()
+                        , expired
+                        , TimeUnit.MILLISECONDS);
+            });
+        }
     }
 }

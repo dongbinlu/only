@@ -37,7 +37,7 @@ public class JwtUtils {
     /**
      * 认证服务器许可我们的网关的client_secret(需要在oauth_client_details表中配置)
      */
-    private static final String CLIENT_SECRET = "smlz";
+    private static final String CLIENT_SECRET = "123456";
 
     /**
      * 认证服务器暴露的获取token_key的地址

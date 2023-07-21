@@ -130,7 +130,6 @@ public class TulingAuthServerConfig extends AuthorizationServerConfigurerAdapter
                 .authenticationManager(authenticationManager);
     }
 
-
     /**
      * 方法实现说明:授权服务器安全配置
      * @author:smlz

@@ -16,7 +16,6 @@ import com.tuling.tulingmall.model.*;
 import com.tuling.tulingmall.service.OmsCartItemService;
 import com.tuling.tulingmall.service.OmsPortalOrderService;
 import com.tuling.tulingmall.service.RedisService;
-//import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -146,7 +145,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
      * @return
      */
     @Override
-    //@GlobalTransactional(name = "generateOrder",rollbackFor = Exception.class)
+//    @GlobalTransactional(name = "generateOrder",rollbackFor = Exception.class)
     @Transactional
     public CommonResult generateOrder(OrderParam orderParam,Long memberId) throws BusinessException {
         List<OmsOrderItem> orderItemList = new ArrayList<>();
@@ -228,7 +227,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
             log.warn("远程调用锁定库存失败");
             throw new RuntimeException("远程调用锁定库存失败");
         }
-        //lockStock(cartPromotionItemList);
+//        lockStock(cartPromotionItemList);
         //根据商品合计、运费、活动优惠、优惠券、积分计算应付金额
         OmsOrder order = new OmsOrder();
         order.setDiscountAmount(new BigDecimal(0));

@@ -60,10 +60,10 @@ public class GatewayFlowRuleController {
     private InMemGatewayFlowRuleStore repository;
 
     @Autowired
-    @Qualifier("gatewayRuleNacosProvider")
+    @Qualifier("gatewayFlowRuleNacosProvider")
     private DynamicRuleProvider<List<GatewayFlowRuleEntity>> ruleProvider;
     @Autowired
-    @Qualifier("gatewayRuleNacosPublisher")
+    @Qualifier("gatewayFlowRuleNacosPublisher")
     private DynamicRulePublisher<List<GatewayFlowRuleEntity>> rulePublisher;
 
     @Autowired

@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -61,6 +58,11 @@ public class UmsMemberController {
         return CommonResult.success(tokenMap);
     }
 
+    /**
+     * 获取注册校验码，注册账号用
+     * @param telephone
+     * @return
+     */
     @ApiOperation("获取验证码")
     @RequestMapping(value = "/getAuthCode", method = RequestMethod.GET)
     @ResponseBody
@@ -96,9 +98,18 @@ public class UmsMemberController {
     @ApiOperation(value = "获取当前登陆用户")
     @RequestMapping(value = "/getCurrentMember", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<UmsMember> getCurrentMember(){
-        UmsMember umsMember = memberService.getCurrentMember();
+    public CommonResult<UmsMember> getCurrentMember(@RequestHeader("username")String username,
+                                                    @RequestHeader("memberId")String memberId,
+                                                    @RequestHeader("nickName")String nickName){
+//        UmsMember umsMember = memberService.getCurrentMember();
+
+        UmsMember umsMember = new UmsMember();
+        umsMember.setUsername(username);
+        umsMember.setId(Long.valueOf(memberId).longValue());
+        umsMember.setNickname(nickName);
+
         log.info("当前登陆用户:{}",umsMember.toString());
+
         return CommonResult.success(umsMember);
     }
 

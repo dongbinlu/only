@@ -42,7 +42,7 @@ public class Producer {
     }
 
     @Test
-    public void sendMessageToFanout() {
+    public void sendMessageToFanout()throws Exception {
 
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
             /**
@@ -105,6 +105,24 @@ public class Producer {
         rabbitTemplate.convertAndSend("spring-boot-rounting-direct", "warn", "this is first springboot MQ rounting-direct-warn");
         System.out.println("消息发送成功");
     }
+
+    static int a =1;
+    @Test
+    public void sendMessage() throws Exception {
+        for (int i = 1; i <= 5; i++) {
+            rabbitTemplate.convertAndSend("direct-exchange", "info", "hello world" + i, new MessagePostProcessor() {
+
+                @Override
+                public Message postProcessMessage(Message message) throws AmqpException {
+                    message.getMessageProperties().setMessageId((a++)+"");
+                    return message;
+                }
+            });
+        }
+        System.out.println("消息发送成功");
+        System.in.read();
+    }
+
 
     @Test
     public void sendDelayedMessage() throws Exception {

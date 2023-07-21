@@ -17,7 +17,7 @@ spring:
         flow:
           nacos:
             serverAddr: 127.0.0.1:8848
-            dataId: ${spring.application.name}-gateway-rules
+            dataId: ${spring.application.name}-gateway-flow-rules
             groupId: SENTINEL_GROUP
             ruleType: FLOW
     gateway:

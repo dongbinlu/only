@@ -10,11 +10,11 @@ public class RabbitMQUtil {
     static {
         // 创建连接工厂
         connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("10.1.20.73");
+        connectionFactory.setHost("127.0.0.1");
         connectionFactory.setPort(5672);
         connectionFactory.setUsername("boy");
         connectionFactory.setPassword("boy");
-        connectionFactory.setVirtualHost("/v-boy");
+        connectionFactory.setVirtualHost("/mall");
     }
 
     public static Connection getConnection() {
