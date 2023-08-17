@@ -17,6 +17,18 @@ public class TransactionListener implements RocketMQLocalTransactionListener {
     private ConcurrentHashMap<String, Integer> localTrans = new ConcurrentHashMap<>();
 
 
+    /**
+     * 执行本地事务
+     * <p>
+     * 提交事务，它允许消费者消费此消息
+     * COMMIT_MESSAGE,
+     *
+     * 回滚事务，它代表该消息将被删除，不允许被消费
+     * ROLLBACK_MESSAGE,
+     *
+     * 中间状态，它代表需要检查消息队列来确定状态(长事务)
+     * UNKNOW,
+     */
     @Override
     public RocketMQLocalTransactionState executeLocalTransaction(Message msg, Object arg) {
 
@@ -83,10 +95,7 @@ public class TransactionListener implements RocketMQLocalTransactionListener {
             }
         }
 
-        System.out.printf("checkLocalTransaction is executed once , " + "msgTransactionId=%s , transactionState=%s , status= %s  %s",
-                transId,
-                retState,
-                status);
+        System.out.printf("checkLocalTransaction is executed once , " + "msgTransactionId=%s , transactionState=%s , status= %s  %s", transId, retState, status);
 
         return retState;
     }

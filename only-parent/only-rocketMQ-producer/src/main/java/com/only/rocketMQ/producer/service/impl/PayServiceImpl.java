@@ -30,7 +30,7 @@ public class PayServiceImpl implements PayService {
 
         String[] tags = {"TagA", "TagB", "TagC", "TagD", "TagE"};
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
 
             try {
                 Message<String> msg = MessageBuilder.withPayload("Hello RocketMQ" + i)

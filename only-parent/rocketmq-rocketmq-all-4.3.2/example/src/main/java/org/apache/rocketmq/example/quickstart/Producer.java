@@ -30,9 +30,11 @@ public class Producer {
 
         /*
          * Instantiate with a producer group name.
+         * 使用生产者组名称进行实例化
+         *
          */
         DefaultMQProducer producer = new DefaultMQProducer("boy_group");
-        producer.setNamesrvAddr("10.1.20.73:9876");
+        producer.setNamesrvAddr("127.0.0.1:9876");
         /*
          * Specify name server addresses.
          * <p/>
@@ -50,19 +52,20 @@ public class Producer {
          */
         producer.start();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             try {
 
                 /*
-                 * Create a message instance, specifying topic, tag and message body.
+                 * Create a message instance, specifying（具体的） topic, tag and message body.
                  */
                 Message msg = new Message("TopicTest" /* Topic */,
                     "TagA" /* Tag */,
-                    ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
+                    ("Hello RocketMQ " + "nihao").getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
                 );
 
                 /*
                  * Call send message to deliver message to one of brokers.
+                 * 呼叫发送消息，向经纪人之一发送消息。
                  */
                 SendResult sendResult = producer.send(msg);
 

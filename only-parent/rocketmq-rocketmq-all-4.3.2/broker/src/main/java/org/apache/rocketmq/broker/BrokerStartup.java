@@ -109,7 +109,6 @@ public class BrokerStartup {
 
             final BrokerConfig brokerConfig = new BrokerConfig();
 
-            brokerConfig.setRocketmqHome("D:\\only\\only-parent\\rocketmq-rocketmq-all-4.3.2\\distribution");
             if (null == brokerConfig.getRocketmqHome()) {
                 System.out.printf("Please set the %s variable in your environment to match the location of the RocketMQ installation", MixAll.ROCKETMQ_HOME_ENV);
                 System.exit(-2);
@@ -158,11 +157,6 @@ public class BrokerStartup {
             }
 
             MixAll.properties2Object(ServerUtil.commandLine2Properties(commandLine), brokerConfig);
-            /**
-             * 集成开发环境当中,手动指定rocketmq目录，启动当中需要读取该目录下的配置文件
-             * 编译时，注释掉该行配置
-             */
-            brokerConfig.setRocketmqHome("D:\\only\\only-parent\\rocketmq-rocketmq-all-4.3.2\\distribution");
             /**
              * the end
              */

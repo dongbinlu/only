@@ -14,52 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.apache.rocketmq.example.filter;
+package org.apache.rocketmq.example.simple.consumer;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 
 import java.util.List;
 
-public class SqlConsumer {
+/**
+ * 推模式消费
+ */
+public class PushConsumer {
 
-    public static void main(String[] args) {
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name_4");
-        try {
-            consumer.setNamesrvAddr("localhost:9876");
-            consumer.subscribe("TopicTest",
-                MessageSelector.bySql("(TAGS is not null AND TAGS in ('TagA', 'TagB'))" +
-                    "AND (a is not null AND a between 0 AND 3)"));
-        } catch (MQClientException e) {
-            e.printStackTrace();
-            return;
-        }
-
+    public static void main(String[] args) throws InterruptedException, MQClientException {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("ProducerGroupName");
+        consumer.setNamesrvAddr("localhost:9876");
+        consumer.subscribe("TopicTest", "*");
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
+        //wrong time format 2017_0422_221800
+        //consumer.setConsumeTimestamp("20170422221800");
         consumer.registerMessageListener(new MessageListenerConcurrently() {
 
             @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
-                ConsumeConcurrentlyContext context) {
-//                System.out.printf("%s Receive New Messages: %s %n", Thread.currentThread().getName(), msgs);
-                for (MessageExt msg: msgs){
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+
+                for (MessageExt msg : msgs) {
                     System.out.println(new String(msg.getBody()));
                 }
+
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });
-
-        try {
-            consumer.start();
-        } catch (MQClientException e) {
-            e.printStackTrace();
-            return;
-        }
+        consumer.start();
         System.out.printf("Consumer Started.%n");
     }
 }

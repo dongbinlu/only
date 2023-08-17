@@ -116,7 +116,7 @@ public class RedisLockAspect implements ApplicationRunner {
         /**
          * 两秒执行一次【续时】操作
          * 提交完任务后延期0秒执行，每隔2秒执行一次
-         * 执行周期固定，不管任务执行多长时间，每过3秒钟就会产生一个新的任务
+         * 执行周期固定，不管任务执行多长时间，每过2秒钟就会产生一个新的任务
          */
 
         SCHEDULER.scheduleAtFixedRate(() -> {

@@ -14,57 +14,70 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.rocketmq.example.simple.consumer;
 
-package org.apache.rocketmq.example.simple;
-
-import org.apache.rocketmq.client.consumer.MQPullConsumer;
-import org.apache.rocketmq.client.consumer.MQPullConsumerScheduleService;
+import org.apache.rocketmq.client.consumer.DefaultMQPullConsumer;
 import org.apache.rocketmq.client.consumer.PullResult;
-import org.apache.rocketmq.client.consumer.PullTaskCallback;
-import org.apache.rocketmq.client.consumer.PullTaskContext;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.message.MessageQueue;
-import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
-public class PullScheduleService {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * 手动拉模式消费
+ * 不建议使用，有损性能。
+ */
+public class PullConsumer {
+    private static final Map<MessageQueue, Long> OFFSE_TABLE = new HashMap<MessageQueue, Long>();
 
     public static void main(String[] args) throws MQClientException {
-        final MQPullConsumerScheduleService scheduleService = new MQPullConsumerScheduleService("GroupName1");
+        DefaultMQPullConsumer consumer = new DefaultMQPullConsumer("ProducerGroupName");
 
-        scheduleService.setMessageModel(MessageModel.CLUSTERING);
-        scheduleService.registerPullTaskCallback("TopicTest", new PullTaskCallback() {
+        consumer.start();
 
-            @Override
-            public void doPullTask(MessageQueue mq, PullTaskContext context) {
-                MQPullConsumer consumer = context.getPullConsumer();
+        Set<MessageQueue> mqs = consumer.fetchSubscribeMessageQueues("TopicTest");
+        for (MessageQueue mq : mqs) {
+            System.out.printf("Consume from the queue: %s%n", mq);
+            SINGLE_MQ:
+            while (true) {
                 try {
-
-                    long offset = consumer.fetchConsumeOffset(mq, false);
-                    if (offset < 0)
-                        offset = 0;
-
-                    PullResult pullResult = consumer.pull(mq, "*", offset, 32);
-                    System.out.printf("%s%n", offset + "\t" + mq + "\t" + pullResult);
+                    PullResult pullResult =
+                        consumer.pullBlockIfNotFound(mq, null, getMessageQueueOffset(mq), 32);
+                    System.out.printf("%s%n", pullResult);
+                    putMessageQueueOffset(mq, pullResult.getNextBeginOffset());
                     switch (pullResult.getPullStatus()) {
                         case FOUND:
                             break;
                         case NO_MATCHED_MSG:
                             break;
                         case NO_NEW_MSG:
+                            break SINGLE_MQ;
                         case OFFSET_ILLEGAL:
                             break;
                         default:
                             break;
                     }
-                    consumer.updateConsumeOffset(mq, pullResult.getNextBeginOffset());
-
-                    context.setPullNextDelayTimeMillis(100);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
+        }
 
-        scheduleService.start();
+        consumer.shutdown();
     }
+
+    private static long getMessageQueueOffset(MessageQueue mq) {
+        Long offset = OFFSE_TABLE.get(mq);
+        if (offset != null)
+            return offset;
+
+        return 0;
+    }
+
+    private static void putMessageQueueOffset(MessageQueue mq, long offset) {
+        OFFSE_TABLE.put(mq, offset);
+    }
+
 }

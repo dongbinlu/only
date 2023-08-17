@@ -16,12 +16,9 @@
  */
 package org.apache.rocketmq.example.ordermessage;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.MQProducer;
 import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
@@ -29,19 +26,44 @@ import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
 public class Producer {
     public static void main(String[] args) throws UnsupportedEncodingException {
         try {
-            MQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
+            DefaultMQProducer producer = new DefaultMQProducer("blueboy_group_order");
+            producer.setNamesrvAddr("localhost:9876");
+            producer.setSendMsgTimeout(20000);
             producer.start();
 
-            String[] tags = new String[] {"TagA", "TagB", "TagC", "TagD", "TagE"};
-            for (int i = 0; i < 100; i++) {
+            // 申明5个Tag
+            String[] tags = new String[]{"TagA", "TagB", "TagC", "TagD", "TagE"};
+
+            // 创建10个订单
+            for (int i = 0; i < 10; i++) {
+                // 订单编号
                 int orderId = i % 10;
-                Message msg =
-                    new Message("TopicTestjjj", tags[i % tags.length], "KEY" + i,
-                        ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
+                /**
+                 * topic:主题，一系列消息的集合
+                 * tag:标签，消息分类用
+                 * keys:消息查询用
+                 */
+                Message msg = new Message("blueboy_topic_order", tags[i % tags.length], "KEY" + i, ("Hello RocketMQ blueboy order " + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
+
                 SendResult sendResult = producer.send(msg, new MessageQueueSelector() {
+                    /**
+                     *选择指定的队列存储消息
+                     * @param mqs
+                     * @param msg
+                     * @param arg
+                     * `arg`参数是一个用于附加信息的对象。在`select`方法中，它允许你传递额外的自定义参数，并在消息队列选择过程中进行使用。
+                     *
+                     * `select`方法通常用于选择特定的消息队列，以便将消息发送到该队列。使用`arg`参数可以传递任何类型的对象，以满足具体的业务需求。它提供了一种灵活的方式来处理选择逻辑。
+                     *
+                     * 你可以根据实际需求在`select`方法的实现中使用`arg`参数，例如根据特定条件选择消息队列、指定优先级、指定路由规则等等。根据具体的应用场景，`arg`参数可以用于传递任何相关的信息。
+                     * @return
+                     */
                     @Override
                     public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
                         Integer id = (Integer) arg;

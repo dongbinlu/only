@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CountedCompleter;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -34,10 +33,13 @@ public class ZKLockImpl implements ZKLock,InitializingBean {
     @Autowired
     private CuratorFramework curatorFramework;
 
+    // lockpath = /load_db_10
     @Override
     public boolean lock(String lockpath) {
         boolean result = false;
+        // keyPath = /ZkLock/load_db_10
         String keyPath = LOCK_ROOT_PATH + lockpath;
+        // 创建临时节点，有多个线程进来创建时，只能有一个线程创建成功，其他线程进入catch
         try {
             curatorFramework
                     .create()
@@ -68,6 +70,7 @@ public class ZKLockImpl implements ZKLock,InitializingBean {
                 CountDownLatch countDownLatch = concurrentMap.get(lockpath);
                 //这里为什么要判断呢？大家可以思考一下,高并发场景
                 if(countDownLatch != null){
+                    // 等待线程池中1个任务执行完毕，否则一直阻塞
                     countDownLatch.await();
                 }
             } catch (InterruptedException e1) {

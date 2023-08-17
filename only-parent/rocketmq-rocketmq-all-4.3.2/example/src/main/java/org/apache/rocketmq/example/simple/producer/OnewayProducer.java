@@ -14,30 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.rocketmq.example.simple;
+package org.apache.rocketmq.example.simple.producer;
 
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 
-public class Producer {
+/**
+ * 单向发送
+ */
+public class OnewayProducer {
     public static void main(String[] args) throws MQClientException, InterruptedException {
 
         DefaultMQProducer producer = new DefaultMQProducer("ProducerGroupName");
         producer.setNamesrvAddr("localhost:9876");
+        producer.setSendMsgTimeout(10000);
         producer.start();
 
         for (int i = 0; i < 1; i++)
             try {
                 {
-                    Message msg = new Message("TopicTest",
+                    Message msg = new Message("OnewayTopicTest",
                         "TagA",
                         "OrderID188",
                         "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
-                    SendResult sendResult = producer.send(msg);
-                    System.out.printf("%s%n", sendResult);
+                    producer.sendOneway(msg);
                 }
 
             } catch (Exception e) {

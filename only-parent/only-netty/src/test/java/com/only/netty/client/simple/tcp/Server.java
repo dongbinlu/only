@@ -28,6 +28,7 @@ public class Server {
         InputStream input = socket.getInputStream();
         byte[] buf = new byte[1024];
         System.out.println("准备读取。。。");
+        // 客户端没有数据发送时一直阻塞在这里
         int length = input.read(buf);
         if (length != -1) {
             System.out.printf("IP: %s, Port: %s ,msg: %s \n",

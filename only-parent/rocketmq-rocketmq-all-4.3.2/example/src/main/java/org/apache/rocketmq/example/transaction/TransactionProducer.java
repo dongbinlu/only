@@ -31,7 +31,7 @@ public class TransactionProducer {
         // 事务消息监听器
         TransactionListener transactionListener = new TransactionListenerImpl();
         TransactionMQProducer producer = new TransactionMQProducer("Transaction_Group");
-        producer.setNamesrvAddr("10.1.20.73:9876");
+        producer.setNamesrvAddr("localhost:9876");
         ExecutorService executorService = new ThreadPoolExecutor(2, 5, 100, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2000), new ThreadFactory() {
             @Override
             public Thread newThread(Runnable r) {
@@ -46,7 +46,7 @@ public class TransactionProducer {
         producer.start();
 
         String[] tags = new String[]{"TagA", "TagB", "TagC", "TagD", "TagE"};
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             try {
                 Message msg =
                         new Message("Transaction_Topic", tags[i % tags.length], "KEY" + i,

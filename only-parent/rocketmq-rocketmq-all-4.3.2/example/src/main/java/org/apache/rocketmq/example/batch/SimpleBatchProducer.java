@@ -17,15 +17,18 @@
 
 package org.apache.rocketmq.example.batch;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.message.Message;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleBatchProducer {
 
     public static void main(String[] args) throws Exception {
         DefaultMQProducer producer = new DefaultMQProducer("BatchProducerGroupName");
+
+        producer.setNamesrvAddr("localhost:9876");
         producer.start();
 
         //If you just send messages of no more than 1MiB at a time, it is easy to use batch

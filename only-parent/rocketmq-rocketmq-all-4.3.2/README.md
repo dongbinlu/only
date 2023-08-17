@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 
-
+启动方式一：
 打开Namesrv服务入口类运行
 org.apache.rocketmq.namesrv.NamesrvStartup#main
 
@@ -31,12 +31,28 @@ if (null == brokerConfig.getRocketmqHome()) {
     System.exit(-2);
 }
 
-运行服务
-
+修改代码后还需要添加参数来运行服务
+参数添加在Program arguments
 启动Namesrv
--n localhost:9876 &
+-n localhost:9876
 启动Broker
--n localhost:9876 -c D:\\only\\only-parent\\rocketmq-rocketmq-all-4.3.2\\distribution\\conf\\broker.conf &
+-n localhost:9876 -c D:\\only\\only-parent\\rocketmq-rocketmq-all-4.3.2\\distribution\\conf\\broker.conf
+
+
+启动方式二（优先选择）
+#添加NameSrv环境变量--注意在Environment variables中添加
+ROCKETMQ_HOME=D:\\only\\only-parent\\rocketmq-rocketmq-all-4.3.2\\distribution
+#添加Broker环境变量
+ROCKETMQ_HOME=D:\\only\\only-parent\\rocketmq-rocketmq-all-4.3.2\\distribution
+
+还需要添加参数来运行服务
+参数添加在Program arguments
+启动Namesrv
+-n localhost:9876
+启动Broker
+-n localhost:9876 -c D:\\only\\only-parent\\rocketmq-rocketmq-all-4.3.2\\distribution\\conf\\broker.conf
+
+
 
 
 
