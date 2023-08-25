@@ -42,7 +42,7 @@ public class RocketMqCancelOrderReciever implements RocketMQListener<String> {
             //取消的订单-还原缓存库存
             secKillOrderService.incrRedisStock(productId);
         } catch (Exception e) {
-            log.error("订单取消异常 : 还原库存失败，please check:{}",e.getMessage(),e.getCause());
+            log.error("订单取消异常 : 还原库存失败，please check:{}",e.getMessage(),e);
             throw new RuntimeException();//抛异常出去,rocketmq会重新投递
         }
 

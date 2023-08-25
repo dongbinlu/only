@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 public class OmsOrderItem implements Serializable {
     private Long id;
 
+    private Long memberId;
+
     @ApiModelProperty(value = "订单id")
     private Long orderId;
 
@@ -75,6 +77,14 @@ public class OmsOrderItem implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
     public Long getOrderId() {

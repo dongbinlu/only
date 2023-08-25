@@ -23,10 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronizationAdapter;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
+
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -335,10 +332,11 @@ public class SecKillOrderServiceImpl implements SecKillOrderService {
         //OrderItem关联
         orderItem.setOrderId(order.getId());
         orderItem.setOrderSn(order.getOrderSn());
+        orderItem.setMemberId(order.getMemberId());
         //插入orderItem
         orderItemMapper.insertSelective(orderItem);
         /*
-         * 如果订单创建成功,需要发送定时消息,20min后如果没有支付,则取消当前订单,释放库存
+         * 如果订单创建成功,需要发送定时消息,3min后如果没有支付,则取消当前订单,释放库存
          */
         try {
             boolean sendStatus = orderMessageSender.sendTimeOutOrderMessage(order.getId() + ":" + flashPromotionRelationId + ":" + orderItem.getProductId());
@@ -398,10 +396,10 @@ public class SecKillOrderServiceImpl implements SecKillOrderService {
         /*
          * 校验是否有权限购买token
          */
-        String redisToken = redisOpsUtil.get(RedisKeyPrefixConst.MIAOSHA_TOKEN_PREFIX + memberId + ":" + productId);
-        if(StringUtils.isEmpty(redisToken) || !redisToken.equals(token)){
-            return CommonResult.failed("非法请求,token无效!");
-        }
+//        String redisToken = redisOpsUtil.get(RedisKeyPrefixConst.MIAOSHA_TOKEN_PREFIX + memberId + ":" + productId);
+//        if(StringUtils.isEmpty(redisToken) || !redisToken.equals(token)){
+//            return CommonResult.failed("非法请求,token无效!");
+//        }
 
         //从redis缓存当中取出当前要购买的商品库存
         Integer stock = redisOpsUtil.get(RedisKeyPrefixConst.MIAOSHA_STOCK_CACHE_PREFIX + productId,Integer.class);

@@ -3,6 +3,7 @@
 <mapper namespace="com.tuling.tulingmall.mapper.OmsOrderItemMapper">
   <resultMap id="BaseResultMap" type="com.tuling.tulingmall.model.OmsOrderItem">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
     <result column="order_id" jdbcType="BIGINT" property="orderId" />
     <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
@@ -86,7 +87,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn, 
+    id, member_id,order_id, order_sn, product_id, product_pic, product_name, product_brand, product_sn,
     product_price, product_quantity, product_sku_id, product_sku_code, product_category_id, 
     sp1, sp2, sp3, promotion_name, promotion_amount, coupon_amount, integration_amount, 
     real_amount, gift_integration, gift_growth, product_attr
@@ -123,7 +124,7 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.tuling.tulingmall.model.OmsOrderItem" useGeneratedKeys="true">
-    insert into oms_order_item (order_id, order_sn, product_id, 
+    insert into oms_order_item (member_id,order_id, order_sn, product_id,
       product_pic, product_name, product_brand, 
       product_sn, product_price, product_quantity, 
       product_sku_id, product_sku_code, product_category_id, 
@@ -131,7 +132,7 @@
       promotion_amount, coupon_amount, integration_amount, 
       real_amount, gift_integration, gift_growth, 
       product_attr)
-    values (#{orderId,jdbcType=BIGINT}, #{orderSn,jdbcType=VARCHAR}, #{productId,jdbcType=BIGINT}, 
+    values (#{memberId},#{orderId,jdbcType=BIGINT}, #{orderSn,jdbcType=VARCHAR}, #{productId,jdbcType=BIGINT},
       #{productPic,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{productBrand,jdbcType=VARCHAR}, 
       #{productSn,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, #{productQuantity,jdbcType=INTEGER}, 
       #{productSkuId,jdbcType=BIGINT}, #{productSkuCode,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=BIGINT}, 
@@ -143,6 +144,9 @@
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.tuling.tulingmall.model.OmsOrderItem" useGeneratedKeys="true">
     insert into oms_order_item
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        member_id,
+      </if>
       <if test="orderId != null">
         order_id,
       </if>
@@ -214,6 +218,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        #{memberId},
+      </if>
       <if test="orderId != null">
         #{orderId,jdbcType=BIGINT},
       </if>
@@ -297,6 +304,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=BIGINT},
+      </if>
       <if test="record.orderId != null">
         order_id = #{record.orderId,jdbcType=BIGINT},
       </if>
@@ -374,6 +384,7 @@
   <update id="updateByExample" parameterType="map">
     update oms_order_item
     set id = #{record.id,jdbcType=BIGINT},
+      member_id = #{record.memberId,jdbcType=BIGINT},
       order_id = #{record.orderId,jdbcType=BIGINT},
       order_sn = #{record.orderSn,jdbcType=VARCHAR},
       product_id = #{record.productId,jdbcType=BIGINT},
@@ -404,6 +415,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.tuling.tulingmall.model.OmsOrderItem">
     update oms_order_item
     <set>
+      <if test="memberId != null">
+        memberId = #{memberId},
+      </if>
       <if test="orderId != null">
         order_id = #{orderId,jdbcType=BIGINT},
       </if>
@@ -478,7 +492,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.tuling.tulingmall.model.OmsOrderItem">
     update oms_order_item
-    set order_id = #{orderId,jdbcType=BIGINT},
+    set member_id = #{memberId},
+        order_id = #{orderId,jdbcType=BIGINT},
       order_sn = #{orderSn,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=BIGINT},
       product_pic = #{productPic,jdbcType=VARCHAR},

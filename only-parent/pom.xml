@@ -101,6 +101,7 @@
         <module>only-feign</module>
         <module>only-gateway</module>
         <module>only-mvc</module>
+        <module>only-ShardingSphere</module>
     </modules>
 
 </project>

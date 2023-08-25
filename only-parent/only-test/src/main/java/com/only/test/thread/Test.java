@@ -1,7 +1,5 @@
 package com.only.test.thread;
 
-import lombok.SneakyThrows;
-
 import java.util.concurrent.*;
 
 public class Test {
@@ -36,7 +34,7 @@ public class Test {
         } catch (TimeoutException e) {
             e.printStackTrace();
         } finally {
-            future.cancel(true);
+            future.cancel(false);
         }
 
 

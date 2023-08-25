@@ -41,13 +41,24 @@ public class OrderMessageSender {
      * 发送延时订单
      * @param cancelId
      *      秒杀订单ID orderId:promotionId 秒杀活动ID
+     *
+     *
+     * ocketMQ的syncSend方法是用于同步发送消息的方法。它接收四个参数：
+     * destination表示目标主题或队列的名称，
+     * message表示要发送的消息对象，
+     * timeout表示发送消息的超时时间，
+     * delayLevel表示消息发送的延迟级别。
+     *
+     * 方法返回一个SendResult对象，该对象包含发送消息的结果信息。
+     * 注意：该方法是同步阻塞的，只有在消息发送成功或超时后，方法才会返回结果。如果消息发送失败，将会抛出异常。
      * @return
      */
     public boolean sendTimeOutOrderMessage(String cancelId){
         Message message = MessageBuilder.withPayload(cancelId)
                 .setHeader(RocketMQHeaders.KEYS, cancelId)
                 .build();
-        SendResult result = rocketMQTemplate.syncSend(scheduleTopic+":"+TAG,message,5000,15);
+
+        SendResult result = rocketMQTemplate.syncSend(scheduleTopic+":"+TAG,message,5000,7);
         return SendStatus.SEND_OK == result.getSendStatus();
     }
 

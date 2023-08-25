@@ -653,9 +653,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.tuling.tulingmall.model.OmsOrder">
     update oms_order
     <set>
-      <if test="memberId != null">
+<!--      <if test="memberId != null">
         member_id = #{memberId,jdbcType=BIGINT},
-      </if>
+      </if>-->
       <if test="couponId != null">
         coupon_id = #{couponId,jdbcType=BIGINT},
       </if>
