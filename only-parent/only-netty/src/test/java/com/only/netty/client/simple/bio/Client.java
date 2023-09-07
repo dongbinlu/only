@@ -1,4 +1,4 @@
-package com.only.netty.client.simple.tcp;
+package com.only.netty.client.simple.bio;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -11,7 +11,7 @@ public class Client {
         // 1、创建socket客户端，连接localhost:18090服务
         Socket socket = new Socket("localhost", 18090);
         // 3s后，input.read还没有数据可读，则退出read阻塞。
-        socket.setSoTimeout(3*1000);
+        socket.setSoTimeout(3 * 1000);
 
         // 2、获取输出流
         OutputStream output = socket.getOutputStream();
@@ -26,8 +26,8 @@ public class Client {
         int length = 0;
         System.out.println("正在等待接受报文。。。");
         // 这行代码保障服务端确实响应发送数据，客户端才读取
-        // 防止客户端发送数据后立马读取数据时为空
-        while (length == 0){
+        // 防止客户端发送数据后立马读取数据时为空,同时也要注意如果服务端一直没有发送数据，则一直在空循环。需要手动添加一个线程来监听超时
+        while (length == 0) {
             length = input.available();
         }
 
@@ -36,7 +36,7 @@ public class Client {
         int len = 0;
         while ((len = input.read(buf)) != -1) {
             outputStream.write(buf, 0, len);
-            if (input.available() == 0){
+            if (input.available() == 0) {
                 break;
             }
         }

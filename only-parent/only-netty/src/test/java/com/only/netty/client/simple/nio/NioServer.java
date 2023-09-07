@@ -65,6 +65,7 @@ public class NioServer {
             System.out.println("有客户端数据可读事件发生了。。。");
             SocketChannel sc = (SocketChannel) key.channel();
 
+            // 注意此处的代码，一次性读取1024个字节，读不完就会造成数据丢失，采用方法是sc.socket().getInputStream().available()来怕断。
             ByteBuffer buffer = ByteBuffer.allocate(1024);
             // NIO 非阻塞体现：首先read方法不会阻塞，其次这种事件响应模型，当
             //调用到read方法时肯定发生了客户端发送数据的事件

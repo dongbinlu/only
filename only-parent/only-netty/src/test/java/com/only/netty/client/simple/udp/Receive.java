@@ -26,6 +26,7 @@ public class Receive {
             String msg = new String(data, 0, length);
 
             System.out.printf("IP地址: %s ,端口: %s ,数据大小: %s ,数据是: %s", hostAddress, port, length, msg);
+            System.out.println();
         }
 
     }

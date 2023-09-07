@@ -102,6 +102,8 @@
         <module>only-gateway</module>
         <module>only-mvc</module>
         <module>only-ShardingSphere</module>
+        <module>only-netty-http</module>
+        <module>only-netty-adv</module>
     </modules>
 
 </project>
