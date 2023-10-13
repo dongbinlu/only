@@ -12,7 +12,6 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import java.net.InetSocketAddress;
 
 /**
- * 作者：Mark/Maoke
  * 类说明：
  */
 public class ServerMsgPackEcho {
@@ -49,6 +48,13 @@ public class ServerMsgPackEcho {
 
         @Override
         protected void initChannel(Channel ch) throws Exception {
+            /**
+             * maxFrameLength: 包的最大长度
+             * lenthFieldOffset: 长度域的偏移量，（理解为表示报文长度的偏移量，也就是第几个字节表示长度）
+             * lengthFieldLength: 长度域本身的长度（也就是说表示长度域的占几个字节）
+             * lengthAdjustment: 长度的一个修正值
+             * initialBytesToStrip: 从数据帧中需要跳过的字节数，才是后续业务实际需要的业务数据。
+             */
             ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(65535,
                     0,2,0,
                     2));

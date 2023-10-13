@@ -14,7 +14,6 @@ public class TestController {
     @Autowired
     private OnlySessionTemplate onlySessionTemplate;
 
-
     @Autowired
     private DevManage devManage;
 

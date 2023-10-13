@@ -8,7 +8,6 @@ import io.netty.util.CharsetUtil;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 作者：Mark/Maoke
  * 类说明：
  */
 public class MsgPackClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
